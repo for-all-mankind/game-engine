@@ -1,0 +1,5 @@
+bin/
+IceEngine
+
+*.sublime-project
+*.sublime-workspace
