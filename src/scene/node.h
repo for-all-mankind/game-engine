@@ -1,13 +1,14 @@
 #ifndef ICE_NODE_H
 #define ICE_NODE_H
 
-#include "component.h"
-
 #include <vector>
 #include <memory>
 
 namespace Ice
 {
+  // Defined in "component.h"
+  class Component;
+
   /////////////////////////////////////
   // This is the class that
 
@@ -17,8 +18,8 @@ namespace Ice
     Node();
     virtual ~Node();
 
-    void Render();
     void Update();
+    void Render();
 
   private:
     std::vector<Component*> _components;
@@ -34,21 +35,26 @@ namespace Ice
   {
   public:
     NodeRef();
+    NodeRef( NodeRef* parent );
     ~NodeRef();
 
     void AddNode   ( NodeRef* node );
     void DetachNode( NodeRef* node );
     void RemoveNode( NodeRef* node );
 
+    Node* GetNode();
+
     void Show();
     void Hide();
+    bool IsHidden() const;
 
-    void Render();
     void Update();
+    void Render();
 
   private:
     bool _is_hidden;
 
+    NodeRef*  _parent;
     Node*     _node;
     // Transform _transform;
 

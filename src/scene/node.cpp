@@ -1,4 +1,5 @@
 #include "node.h"
+#include "component.h"
 
 namespace Ice
 {
@@ -9,16 +10,19 @@ namespace Ice
 
   Node::~Node()
   {
-
-  }
-
-  void Node::Render()
-  {
-
+    for ( Component* c : _components )
+      delete c;
   }
 
   void Node::Update()
   {
+    for ( Component* c : _components )
+      c->Update(); 
+  }
 
+  void Node::Render()
+  {
+    for ( Component* c : _components )
+      c->Render();
   }
 }
