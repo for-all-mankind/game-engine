@@ -38,31 +38,33 @@ namespace Ice
   }
 
   void NodeRef::Show()
-  { 
-    _is_hidden = false; 
+  {
+    _is_hidden = false;
   }
 
   void NodeRef::Hide()
-  { 
-    _is_hidden = true;  
+  {
+    _is_hidden = true;
   }
 
   bool NodeRef::IsHidden() const
   {
-    return _is_hidden;  
+    return _is_hidden;
   }
 
   void NodeRef::Update()
   {
-    _node->Update();
+    if ( _node != nullptr )
+      _node->Update();
 
     for ( NodeRef* n : _children )
       n->Update();
   }
 
-  void NodeRef::Render()
+  void NodeRef::Render() const
   {
-    _node->Render();
+    if ( _node != nullptr )
+      _node->Render();
 
     for ( NodeRef* n : _children )
       n->Render();

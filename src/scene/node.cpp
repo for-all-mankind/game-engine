@@ -17,10 +17,10 @@ namespace Ice
   void Node::Update()
   {
     for ( Component* c : _components )
-      c->Update(); 
+      c->Update();
   }
 
-  void Node::Render()
+  void Node::Render() const
   {
     for ( Component* c : _components )
       c->Render();

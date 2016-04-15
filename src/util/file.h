@@ -5,7 +5,8 @@
 
 namespace Ice
 {
-  void read_file( const std::string& filename, std::string* contents );
+  void read_file  ( const std::string& filename, std::string* contents );
+  bool file_exists( const std::string& filename );
 }
 
 #endif // INDIE_CIV_ENGINE_FILE_H

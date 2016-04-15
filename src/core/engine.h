@@ -3,8 +3,8 @@
 
 #include "window.h"
 #include "../scene/node.h"
-
-#include <SDL2/SDL.h>
+#include "../rendering/render_context.h"
+#include "../rendering/renderer.h"
 
 namespace Ice
 {
@@ -15,16 +15,22 @@ namespace Ice
     ~Engine();
 
     // The subsystem initialisation methods
-    bool InitWindow( const WindowConfig&& cfg );
+    bool InitWindow();
+    bool InitAudio();
+    bool InitMods();
 
     // One method to rule them.
     void Run();
 
   private:
-    Window* _window;
+    Window*   _window;
+    Renderer* _renderer;
 
-    NodeRef _scene;
+    RenderContext _context_ui;
+    RenderContext _context_scene;
+
     NodeRef _ui;
+    NodeRef _scene;
   };
 }
 

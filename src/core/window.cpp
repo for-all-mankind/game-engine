@@ -1,84 +1,112 @@
 #include "window.h"
 
+#include <iostream>
+
 namespace Ice
 {
+  static void temp_callback( GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods )
+  {
+    if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
+      glfwSetWindowShouldClose( window, true );
+  }
+
+  /////////////////////////////////////
 
   Window::Window( const WindowConfig&& cfg )
-    : _closed( false )
+    : _window( nullptr )
   {
-    SDL_GL_SetAttribute( SDL_GL_RED_SIZE    , 8  );
-    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE  , 8  );
-    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE   , 8  );
-    SDL_GL_SetAttribute( SDL_GL_ALPHA_SIZE  , 8  );
-    SDL_GL_SetAttribute( SDL_GL_BUFFER_SIZE , 32 );
-    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1  );
+    glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
+    glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 3 );
+    glfwWindowHint( GLFW_OPENGL_PROFILE       , GLFW_OPENGL_CORE_PROFILE );
 
-    // SDL_GL_SetAttribute( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-    // SDL_GL_SetAttribute( SDL_GL_CONTEXT_MINOR_VERSION, 3 );
-    // SDL_GL_SetAttribute( SDL_GL_CONTEXT_PROFILE_MASK , SDL_GL_CONTEXT_PROFILE_CORE );
+    _title      = cfg.title;
+    _width      = cfg.width;
+    _height     = cfg.height;
+    _fullscreen = cfg.fullscreen;
 
-    _window = SDL_CreateWindow( cfg.title.c_str(),
-                                SDL_WINDOWPOS_CENTERED,
-                                SDL_WINDOWPOS_CENTERED,
-                                cfg.width, cfg.height,
-                                SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
+    CreateWindow();
 
     // TODO:
     // throw exceptions when we encounter errors.
-    if ( !_window )
+    if ( _window == nullptr )
     {
-      SDL_Log( SDL_GetError() );
-      exit( 1 );
-    }
-
-    _context = SDL_GL_CreateContext( _window );
-
-    if ( !_context )
-    {
-      SDL_Log( SDL_GetError() );
-      exit( 1 );
+      std::cout << "Failed to create a window." << std::endl;
+      glfwTerminate();
+      exit( EXIT_FAILURE );
     }
 
     if ( glewInit() != GLEW_OK )
     {
-      SDL_Log( "Failed to initialise GLEW." );
-      exit( 1 );
+      std::cout << "Failed to initialise GLEW." << std::endl;
+      exit( EXIT_FAILURE );
     }
+
+    // Register callbacks
+    glfwSetKeyCallback( _window, temp_callback );
   }
 
   Window::~Window()
   {
-    SDL_GL_DeleteContext( _context );
-    SDL_DestroyWindow   ( _window  );
-  }
-
-  void Window::Clear()
-  {
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    glfwDestroyWindow( _window );
   }
 
   void Window::Update()
   {
-    SDL_GL_SwapWindow( _window );
+    glfwPollEvents();
+
+    // Switch to fullscreen mode.
+    if ( glfwGetKey( _window, GLFW_KEY_F11 ) )
+    {
+      _fullscreen = !_fullscreen;
+
+      CreateWindow();
+
+      if ( _window == nullptr )
+      {
+        std::cout << "Failed to switch window mode." << std::endl;
+        glfwTerminate();
+        exit( EXIT_FAILURE );
+      }
+    }
+  }
+
+  void Window::Flip()
+  {
+    glfwSwapBuffers( _window );
   }
 
   bool Window::IsOpen() const
   {
-    return !_closed;
+    return !glfwWindowShouldClose( _window );
   }
 
-  void Window::Close()
+  void Window::CreateWindow()
   {
-    _closed = true;
-  }
+    GLFWwindow* new_window = nullptr;
 
-  void Window::HandleEvents( const SDL_Event& e )
-  {
-    switch( e.window.event )
+    if ( _fullscreen )
     {
-      default:
-        break;
+            GLFWmonitor* primary = glfwGetPrimaryMonitor();
+      const GLFWvidmode* mode    = glfwGetVideoMode( primary );
+
+      new_window = glfwCreateWindow( mode->width, mode->height,
+                                     _title.c_str(),
+                                     primary, _window );
     }
+    else
+    {
+      new_window = glfwCreateWindow( _width, _height,
+                                     _title.c_str(),
+                                     nullptr, _window );
+    }
+
+    if ( _window != nullptr )
+      glfwDestroyWindow( _window );
+
+    _window = new_window;
+
+    glfwMakeContextCurrent( _window );
   }
+
 
 }

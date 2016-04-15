@@ -19,7 +19,7 @@ namespace Ice
     virtual ~Node();
 
     void Update();
-    void Render();
+    void Render() const;
 
   private:
     std::vector<Component*> _components;
@@ -49,7 +49,7 @@ namespace Ice
     bool IsHidden() const;
 
     void Update();
-    void Render();
+    void Render() const;
 
   private:
     bool _is_hidden;

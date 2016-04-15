@@ -4,7 +4,7 @@
 #include "../util/types.h"
 
 #include <GL/glew.h>
-#include <SDL2/SDL.h>
+#include <GLFW/glfw3.h>
 
 #include <string>
 
@@ -16,6 +16,8 @@ namespace Ice
 
     u32 width;
     u32 height;
+
+    bool fullscreen;
   };
 
   /////////////////////////////////////
@@ -26,19 +28,22 @@ namespace Ice
     Window( const WindowConfig&& cfg );
     ~Window();
 
-    void Clear();
     void Update();
+    void Flip();
 
     bool IsOpen() const;
     void Close();
 
-    void HandleEvents( const SDL_Event& e );
+  private:
+    void CreateWindow();
 
   private:
-    bool _closed;
+    bool _fullscreen;
+    u32  _width;
+    u32  _height;
 
-    SDL_Window*   _window;
-    SDL_GLContext _context;
+    std::string _title;
+    GLFWwindow* _window;
   };
 }
 
