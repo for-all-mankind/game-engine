@@ -72,6 +72,28 @@ the variable or constant is.
 The compiler can infer the type of `foo` by looking at the return type of the
 function `add`.
 
+[Contents](#icescript)
+
+### Printing
+
+[Contents](#icescript)
+
+### Comments
+
+    // This is a single comment.
+
+    /*
+      This is a comment that is
+      written across multiple lines.
+
+      /*
+        Unlike C/C++, Java and such comments can
+        be nested.
+      */
+    */
+
+[Contents](#icescript)
+
 ### Basic Types
 
 There are a few basic types in the language that can be used. Once we get to
@@ -80,27 +102,77 @@ how a program can define it's own types.
 
 The basic types are:
 
-* Int8
-* Int16
-* Int32
-* Int64
-* UInt8
-* UInt16
-* UInt32
-* UInt64
-* Float
-* Double
-* Bool
-* Char
-* String
+| Type Name | Bytes | Other Names | Range of Values                     |
+| --------- | ----- | ----------- | ----------------------------------- |
+| Int8      | 1     |             | `-128` to `127`                     |
+| Int16     | 2     |             | `-32,768` to `32,767`               |
+| Int32     | 4     | Int         | `–2,147,483,648` to `2,147,483,647` |
+| Int64     | 8     |             | `–9,223,372,036,854,775,808` to     |
+|           |       |             | `9,223,372,036,854,775,807`         |
+| UInt8     | 1     |             | `0` to `255`                        |
+| UInt16    | 2     |             | `0` to `65,535`                     |
+| UInt32    | 4     | UInt        | `0` to `4,294,967,295`              |
+| UInt64    | 8     |             | `0` to `18,446,744,073,709,551,615` |
+| Float     | 4     |             | `3.4E +/- 38`  ( 7 digits  )        |
+| Double    | 8     |             | `1.7E +/- 308` ( 15 digits )        |
+| Bool      | 1     |             | `true` or `false`                   |
+| Char      | 1     |             | `-128` to `127`                     |
+| String    | N/A   |             | N/A                                 |
+
+[Contents](#icescript)
+
+### Numeric Literals
+
+There are seven types of numeric literal in this language. They are:
+
+    let int         = 42;
+    let uint        = 42u;
+    let float       = 3.14159f;
+    let double      = 3.14159;
+    let hexidecimal = 0xDEADBEEF;
+    let octal       = 0o76543210;
+    let binary      = 0b10;
+
+[Contents](#icescript)
 
 ### Pointers
+
+[Contents](#icescript)
+
 ### If Statements
+
+If
+
+[Contents](#icescript)
+
 ### Loops
+
+[Contents](#icescript)
+
 ### Functions
+
+[Contents](#icescript)
+
 ### Structs
+
+[Contents](#icescript)
+
 ### Enums
+
+[Contents](#icescript)
+
 ### Classes
+
+[Contents](#icescript)
+
 ### Objects
+
+[Contents](#icescript)
+
 ### Interfaces
+
+[Contents](#icescript)
+
 ### Custom Types
+
+[Contents](#icescript)

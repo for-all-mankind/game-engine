@@ -39,11 +39,11 @@ namespace Ice { namespace Script {
     KW_INTERFACE,         /* interface */
     KW_TYPE,              /* type      */
 
+    KW_VAR,               /* var     */
+    KW_LET,               /* let     */
     KW_NEW,               /* new     */
     KW_DELETE,            /* delete  */
     KW_OWNER,             /* owner   */
-    KW_VAR,               /* var     */
-    KW_LET,               /* let     */
     KW_MUTABLE,           /* mutable */
     KW_CAST,              /* cast    */
 
