@@ -6,6 +6,37 @@ namespace Ice { namespace Script {
     : _parent_scope( parent )
   {}
 
+  SymbolTable::~SymbolTable()
+  {
+    for ( auto pair : _symbols )
+    {
+      Symbol* s = &pair.second;
+
+      if ( s->info != nullptr )
+        switch ( s->type )
+        {
+          case SymbolType::VARIABLE:
+            delete static_cast<VariableInfo*>( s->info );
+          case SymbolType::FUNCTION:
+            delete static_cast<FunctionInfo*>( s->info );
+          case SymbolType::CLASS:
+            delete static_cast<ClassInfo*>( s->info );
+          case SymbolType::OBJECT:
+            delete static_cast<ObjectInfo*>( s->info );
+          case SymbolType::STRUCT:
+            delete static_cast<StructInfo*>( s->info );
+          case SymbolType::ENUM:
+            delete static_cast<EnumInfo*>( s->info );
+          case SymbolType::INTERFACE:
+            delete static_cast<InterfaceInfo*>( s->info );
+          case SymbolType::ARRAY:
+            delete static_cast<ArrayInfo*>( s->info );
+          case SymbolType::TYPE:
+            delete static_cast<TypeInfo*>( s->info );
+        }
+    }
+  }
+
   bool SymbolTable::Check ( const std::string& symbol_name )
   {
     auto found = _symbols.find( symbol_name );

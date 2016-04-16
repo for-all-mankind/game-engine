@@ -18,7 +18,10 @@ This guide will give a brief overview of the constructs in IceScript.
 
 * [Variables and Constants](#variables-and-constants)
 * [Basic Types](#basic-types)
+* [Printing](#printing)
+* [Comments](#comments)
 * [Pointers](#pointers)
+* [Numeric Literals](#numeric-literals)
 * [If Statements](#if-statements)
 * [Loops](#loops)
 * [Functions](#functions)
@@ -102,22 +105,21 @@ how a program can define it's own types.
 
 The basic types are:
 
-| Type Name | Bytes | Other Names | Range of Values                     |
-| --------- | ----- | ----------- | ----------------------------------- |
-| Int8      | 1     |             | `-128` to `127`                     |
-| Int16     | 2     |             | `-32,768` to `32,767`               |
-| Int32     | 4     | Int         | `–2,147,483,648` to `2,147,483,647` |
-| Int64     | 8     |             | `–9,223,372,036,854,775,808` to     |
-|           |       |             | `9,223,372,036,854,775,807`         |
-| UInt8     | 1     |             | `0` to `255`                        |
-| UInt16    | 2     |             | `0` to `65,535`                     |
-| UInt32    | 4     | UInt        | `0` to `4,294,967,295`              |
-| UInt64    | 8     |             | `0` to `18,446,744,073,709,551,615` |
-| Float     | 4     |             | `3.4E +/- 38`  ( 7 digits  )        |
-| Double    | 8     |             | `1.7E +/- 308` ( 15 digits )        |
-| Bool      | 1     |             | `true` or `false`                   |
-| Char      | 1     |             | `-128` to `127`                     |
-| String    | N/A   |             | N/A                                 |
+| Type Name | Bytes | Other Names | Range of Values                                             |
+| --------- | ----- | ----------- | ----------------------------------------------------------- |
+| Int8      | 1     |             | `-128` to `127`                                             |
+| Int16     | 2     |             | `-32,768` to `32,767`                                       |
+| Int32     | 4     | Int         | `–2,147,483,648` to `2,147,483,647`                         |
+| Int64     | 8     |             | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
+| UInt8     | 1     |             | `0` to `255`                                                |
+| UInt16    | 2     |             | `0` to `65,535`                                             |
+| UInt32    | 4     | UInt        | `0` to `4,294,967,295`                                      |
+| UInt64    | 8     |             | `0` to `18,446,744,073,709,551,615`                         |
+| Float     | 4     |             | `3.4E +/- 38`  ( 7 digits  )                                |
+| Double    | 8     |             | `1.7E +/- 308` ( 15 digits )                                |
+| Bool      | 1     |             | `true` or `false`                                           |
+| Char      | 1     |             | `-128` to `127`                                             |
+| String    | N/A   |             | N/A                                                         |
 
 [Contents](#icescript)
 

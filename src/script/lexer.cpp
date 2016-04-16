@@ -702,10 +702,6 @@ namespace Ice { namespace Script {
 
   void Lexer::Run( const std::string& filename )
   {
-    // Store our current state so that
-    // we can start lexing the new file.
-    StateStore();
-
     _filename = filename;
     _mode     = &LexerMode::Start;
 

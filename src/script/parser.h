@@ -13,15 +13,27 @@ namespace Ice { namespace Script {
   public:
     Parser( SymbolTable* global );
 
-    Ast::Node* Run( const std::string& filename );
+    void Run( const std::string& filename );
 
   private:
     void BuildTypeTable();
 
-    void Block  ( Scope* scope );
-    void IOStmt ( Scope* scope );
-    void TopStmt( Scope* scope );
-    void Stmt   ( Scope* scope );
+    void Block();
+    void IOStmt();
+    void ImportStmt();
+    void ExportStmt();
+    void TopStmt();
+    void FuncDeclStmt();
+    void FuncDeclHead();
+    void Type();
+    void InterfaceDeclStmt();
+    void ClassDeclStmt();
+    void ObjectDeclStmt();
+    void StructDeclStmt();
+    void NamespaceDeclStmt();
+    void EnumDeclStmt();
+    void TypeDeclStmt();
+    void Stmt();
 
     bool Match ( TokenType match_type  );
     void Expect( TokenType expect_type );

@@ -20,6 +20,7 @@ namespace Ice { namespace Script {
     VARIABLE,
     FUNCTION,
     CLASS,
+    OBJECT,
     STRUCT,
     ENUM,
     INTERFACE,
@@ -29,34 +30,111 @@ namespace Ice { namespace Script {
 
   /////////////////////////////////
 
+  struct TypeInfo
+  {
+    std::string type_name;
+    std::string alias_for;
+  };
+
+  /////////////////////////////////
+
   struct VariableInfo
   {
+    std::string name;
+    std::string type;
+    std::string value;
+
+    bool is_const;
   };
 
   /////////////////////////////////
 
   struct FunctionInfo
   {
-    // DataType return_type;
-    u32      number_args;
+    std::string name;
+    TypeInfo    return_type;
 
-    VariableInfo* args;
+    std::vector<VariableInfo> args;
+  };
+
+  /////////////////////////////////
+
+  struct CtorInfo
+  {
+    std::string name;
+
+    bool is_static;
+    bool is_private;
+
+    std::vector<VariableInfo> args;
+  };
+
+  struct DtorInfo
+  {
+    std::string name;
+
+    bool is_private;
+  };
+
+  struct MethodInfo : public FunctionInfo
+  {
+    bool is_const;
+    bool is_static;
+    bool is_private;
+  };
+
+  struct MemberInfo : public VariableInfo
+  {
+    bool is_static;
+    bool is_private;
+  };
+
+  struct DelegateInfo
+  {
+    std::string name;
+
+    MemberInfo* delgate;
   };
 
   /////////////////////////////////
 
   struct ClassInfo
   {
+    std::string name;
+
     bool has_ctor;
     bool has_dtor;
 
-    FunctionInfo* ctor_info;
+    CtorInfo ctor_info;
+    DtorInfo dtor_info;
+
+    std::vector<MethodInfo>   methods;
+    std::vector<MemberInfo>   members;
+    std::vector<DelegateInfo> delegates;
+  };
+
+  /////////////////////////////////
+
+  struct ObjectInfo
+  {
+    std::string name;
+
+    bool has_ctor;
+    bool has_dtor;
+
+    CtorInfo ctor_info;
+    DtorInfo dtor_info;
+
+    std::vector<MethodInfo>   methods;
+    std::vector<MemberInfo>   members;
+    std::vector<DelegateInfo> delegates;
   };
 
   /////////////////////////////////
 
   struct StructInfo
   {
+
   };
 
   /////////////////////////////////
@@ -69,20 +147,22 @@ namespace Ice { namespace Script {
 
   struct InterfaceInfo
   {
+
   };
 
   /////////////////////////////////
 
   struct ArrayInfo
   {
+    u32 size;
   };
 
   /////////////////////////////////
 
   struct Symbol
   {
-    SymbolType  symbol_type;
-    void*       meta_info;
+    SymbolType type;
+    void*      info;
   };
 
   /////////////////////////////////
@@ -91,6 +171,7 @@ namespace Ice { namespace Script {
   {
   public:
     SymbolTable( SymbolTable* parent );
+    ~SymbolTable();
 
     bool    Check ( const std::string& symbol_name );
     void    Insert( const std::string& symbol_name, const Symbol& symbol );

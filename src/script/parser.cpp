@@ -9,35 +9,28 @@ namespace Ice { namespace Script {
     _global = global;
 
     // Register the built-in types.
-    _type_table.Add( "Int8"   );
-    _type_table.Add( "Int16"  );
-    _type_table.Add( "Int32"  );
-    _type_table.Add( "Int64"  );
-    _type_table.Add( "UInt8"  );
-    _type_table.Add( "UInt16" );
-    _type_table.Add( "UInt32" );
-    _type_table.Add( "UInt64" );
-    _type_table.Add( "Float"  );
-    _type_table.Add( "Double" );
-    _type_table.Add( "Bool"   );
-    _type_table.Add( "Char"   );
-    _type_table.Add( "String" );
+    // _global->Insert( "Int8"   );
+    // _global->Insert( "Int16"  );
+    // _global->Insert( "Int32"  );
+    // _global->Insert( "Int64"  );
+    // _global->Insert( "UInt8"  );
+    // _global->Insert( "UInt16" );
+    // _global->Insert( "UInt32" );
+    // _global->Insert( "UInt64" );
+    // _global->Insert( "Float"  );
+    // _global->Insert( "Double" );
+    // _global->Insert( "Bool"   );
+    // _global->Insert( "Char"   );
+    // _global->Insert( "String" );
 
-    _type_table.Alias( "Int" , "Int32"  );
-    _type_table.Alias( "UInt", "UInt32" );
+    // _global->Insert( "Int" , "Int32"  );
+    // _global->Insert( "UInt", "UInt32" );
   }
 
   void Parser::Run( const std::string& filename )
   {
-
     // Scan the input file.
     _lexer.Run( filename );
-
-    // First pass to populate the type table
-    // with user defined types.
-    PopulateTypeTable();
-
-    // Parse the program.
 
     /*
       program ::= io_stmt_list TOK_EOF .
@@ -48,54 +41,12 @@ namespace Ice { namespace Script {
     */
 
     while ( !Match( TOK_EOF ) )
-      IOStmt( table );
+      IOStmt();
   }
 
   /////////////////////////////////
 
-  void Parser::PopulateTypeTable()
-  {
-    while ( true )
-    {
-      const Token* c  = _lexer.NextToken();
-      const Token* n1 = _lexer.PeekToken( 1 );
-      const Token* n2 = _lexer.PeekToken( 2 );
-
-      if ( c->type == TOK_EOF )
-        break;
-
-      if ( c->type == TOK_IDENTIFIER && n1->type == TOK_COLON )
-      {
-        switch ( n2->type )
-        {
-          case KW_INTERFACE:
-          case KW_CLASS:
-          case KW_STRUCT:
-          case KW_ENUM:
-            if ( !_type_table.Check( c->lexeme ) )
-              _type_table.Add( c->lexeme );
-            else
-              // TODO: add line numbers.
-              std::cout << "Redefinition of " << c->lexeme << std::endl;
-            break;
-
-          case KW_TYPE:
-            // TODO: Get the right hand type.
-            // _type_table.Check( )
-            break;
-
-          default:
-            break;
-        }
-      }
-    }
-
-    _lexer.Reset();
-  }
-
-  /////////////////////////////////
-
-  void Parser::Block( Scope* scope )
+  void Parser::Block()
   {
     /*
       block ::= stmt_list KW_END .
@@ -105,12 +56,12 @@ namespace Ice { namespace Script {
     */
 
     while ( !Match( KW_END ) )
-      Stmt( table );
+      Stmt();
   }
 
   /////////////////////////////////
 
-  void Parser::IOStmt( Scope* scope )
+  void Parser::IOStmt()
   {
     /*
       io_stmt ::= import_stmt .
@@ -119,18 +70,18 @@ namespace Ice { namespace Script {
     */
 
     if ( Match( KW_IMPORT ) )
-      Import( scope );
+      ImportStmt();
 
     else if ( Match( KW_EXPORT ) )
-      Export( scope );
+      ExportStmt();
 
     else
-      TopStmt( scope );
+      TopStmt();
   }
 
   /////////////////////////////////
 
-  void Parser::ImportStmt( Scope* scope )
+  void Parser::ImportStmt()
   {
     /*
       import_stmt ::= KW_IMPORT LIT_STRING as_namespace TOK_SEMI_COLON .
@@ -150,18 +101,18 @@ namespace Ice { namespace Script {
 
   /////////////////////////////////
 
-  void Parser::ExportStmt( Scope* scope )
+  void Parser::ExportStmt()
   {
     /*
       export_stmt ::= KW_EXPORT top_stmt .
     */
 
-    TopStmt( scope );
+    TopStmt();
   }
 
   /////////////////////////////////
 
-  void Parser::TopStmt( Scope* scope )
+  void Parser::TopStmt()
   {
     /*
       top_stmt ::= func_decl_stmt .
@@ -180,7 +131,7 @@ namespace Ice { namespace Script {
 
     if ( t1 == nullptr
       || t2 == nullptr
-      || t3 == nullptr )
+      || t3 == nullptr );
       // TODO: complain...
 
     if ( t1->type == TOK_IDENTIFIER )
@@ -211,7 +162,7 @@ namespace Ice { namespace Script {
         else if ( t3->type == KW_TYPE )
           TypeDeclStmt();
 
-        else
+        else;
           // TODO: complain...
       }
 
@@ -255,7 +206,7 @@ namespace Ice { namespace Script {
 
     while ( !Match( TOK_RPAREN ) )
     {
-      VarDeclStmt();
+      // VarDeclStmt();
       Match( TOK_COMMA );
     }
 
@@ -295,7 +246,7 @@ namespace Ice { namespace Script {
     {
       Expect( TOK_CARET  );
 
-      if ( Match( TOK_INDETIFIER ) )
+      if ( Match( TOK_IDENTIFIER ) )
         ; // TODO: lookup type.
       else
       {
@@ -357,7 +308,7 @@ namespace Ice { namespace Script {
   void Parser::ObjectDeclStmt()
   {
     /*
-      obj_decl_stmt ::= TOK_INDETIFIER TOK_COLON KW_OBJECT obj_body KW_END .
+      obj_decl_stmt ::= TOK_IDENTIFIER TOK_COLON KW_OBJECT obj_body KW_END .
 
       obj_body ::= obj_stmt_list .
       obj_body ::= .
@@ -403,7 +354,7 @@ namespace Ice { namespace Script {
 
     while ( !Match( KW_END ) )
     {
-      VarDeclStmt();
+      // VarDeclStmt();
       Expect( TOK_SEMI_COLON );
     }
   }
@@ -475,7 +426,7 @@ namespace Ice { namespace Script {
 
   /////////////////////////////////
 
-  void Parser::Stmt( Scope* scope )
+  void Parser::Stmt()
   {
     /*
       stmt ::= var_assign_stmt .
@@ -489,28 +440,23 @@ namespace Ice { namespace Script {
     {
       const Token* t = _lexer.PeekToken( 1 );
 
-      if ( t->type == TOK_EQUAL )
-        VarAssignStmt();
+      if ( t->type == TOK_EQUAL );
+        // VarAssignStmt();
 
-      else if ( t->type == TOK_COLON_EQUAL )
-        VarDeclInferStmt();
+      else if ( t->type == TOK_COLON_EQUAL );
+        // VarDeclInferStmt();
 
-      else if ( t->type == TOK_COLON )
-        VarDeclAssignStmt(); // May return a 'VarDeclStmt'
+      else if ( t->type == TOK_COLON );
+        // VarDeclAssignStmt(); // May return a 'VarDeclStmt'
 
-      else
-        TopExpr();
+      else;
+        // TopExpr();
     }
   }
 
   /////////////////////////////////
 
-  const Token* Parser::Current()
-  {
-    return _lexer.PeekToken( 0 );
-  }
-
-  bool Match( TokenType match_type )
+  bool Parser::Match( TokenType match_type )
   {
     const Token* token = _lexer.PeekToken( 0 );
 
@@ -523,7 +469,7 @@ namespace Ice { namespace Script {
     return false;
   }
 
-  void Expect( TokenType expect_type )
+  void Parser::Expect( TokenType expect_type )
   {
     if ( !Match( expect_type ) )
     {
