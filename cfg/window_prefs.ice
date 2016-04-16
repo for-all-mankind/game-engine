@@ -1,12 +1,7 @@
-Resolution: struct
-  width : u32;
-  height: u32;
-end
+WindowMode: object
+  var title        = "Ice Engine";
+  var full_screen  = false;
 
-WindowMode: stuct
-  window_title: string;
-  resolution  : Resolution;
-  full_screen : boolean;
+  var width : UInt = 800;
+  var height: UInt = 600;
 end
-
-window_mode := WindowMode{ "Ice Engine", Resolution{ 800u, 600u }, false };

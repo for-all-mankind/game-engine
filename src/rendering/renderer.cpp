@@ -6,7 +6,7 @@ namespace Ice
 {
   Renderer::Renderer()
   {
-
+    glClearColor( 0.0f, 0.05f, 0.15f, 1.0f );
   }
 
   Renderer::~Renderer()

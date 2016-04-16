@@ -14,11 +14,11 @@ namespace Ice
   // hooking into glfw.
   void key_callback( GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods );
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   typedef void (*ContextCallback)();
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   class InputContext
   {
@@ -33,7 +33,7 @@ namespace Ice
     std::unordered_map<u64, ContextCallback> _functions;
   };
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   class InputController
   {

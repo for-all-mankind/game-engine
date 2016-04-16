@@ -1,5 +1,5 @@
-#ifndef PNL_AST_H
-#define PNL_AST_H
+#ifndef ICE_SCRIPT_AST_H
+#define ICE_SCRIPT_AST_H
 
 #include "../util/types.h"
 
@@ -10,13 +10,18 @@ namespace Ice { namespace Script { namespace Ast {
   class Node;
     class Block;
     class Stmt;
-      class VarDeclStmt;
+      class ImportStmt;
+      class ExportStmt;
       class ClassDeclStmt;
       class FuncDeclStmt;
       class InterfaceDeclStmt;
       class StructDeclStmt;
-      class TypedefStmt;
+      class TypeDeclStmt;
+      class NamespaceDeclStmt;
+      class ObjectDeclStmt;
+      class EnumDeclStmt;
       class AssignStmt;
+      class VarDeclStmt;
     class Expr;
       class ByteExpr;
       class ShortExpr;
@@ -52,16 +57,14 @@ namespace Ice { namespace Script { namespace Ast {
   class Block : public Node
   {
   public:
-    Block( std::vector<Stmt> stmts, std::vector<Expr> exprs )
+    Block( std::vector<Stmt> stmts )
       : _stmts( std::move( stmts ) )
-      , _exprs( std::move( exprs ) )
     {}
 
     virtual ~Block() {}
 
   private:
     std::vector<Stmt> _stmts;
-    std::vector<Expr> _exprs;
   };
 
   /////////////////////////////////
@@ -233,4 +236,4 @@ namespace Ice { namespace Script { namespace Ast {
 
 } } }
 
-#endif // PNL_AST_H
+#endif // ICE_SCRIPT_AST_H

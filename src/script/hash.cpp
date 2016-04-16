@@ -1,5 +1,7 @@
 #include "hash.h"
 
+#include <cstdio>
+
 namespace Ice { namespace Script {
 
   u32 hash( void* key, i32 length )
@@ -19,6 +21,21 @@ namespace Ice { namespace Script {
     h += ( h << 15 );
 
     return h;
+  }
+
+  u32 hash( const std::string& string )
+  {
+    const u32 length = string.length();
+          u32 result;
+
+    char* buffer = new char[ length ];
+
+    sprintf( buffer, "%s", string.data() );
+
+    result = hash( buffer, length );
+
+    delete buffer;
+    return result;
   }
 
 } }

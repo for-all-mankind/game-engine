@@ -9,7 +9,7 @@ namespace Ice
   // Defined in "component.h"
   class Component;
 
-  /////////////////////////////////////
+  /////////////////////////////////
   // This is the class that
 
   class Node
@@ -25,7 +25,7 @@ namespace Ice
     std::vector<Component*> _components;
   };
 
-  /////////////////////////////////////
+  /////////////////////////////////
   // The NodeRef class is going to be the
   // main constituent element of the scene
   // graph. Each NodeRef owns a pointer to
@@ -61,7 +61,7 @@ namespace Ice
     std::vector<NodeRef*> _children;
   };
 
-  /////////////////////////////////////
+  /////////////////////////////////
   // The following nodes are pre-built
   // specialisations.
 
@@ -70,14 +70,14 @@ namespace Ice
 
   };
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   class SoundNode : public Node
   {
 
   };
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   class ParticleNode : public Node
   {

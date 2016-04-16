@@ -1,5 +1,5 @@
-#ifndef PNL_LEXER_H
-#define PNL_LEXER_H
+#ifndef ICE_SCRIPT_LEXER_H
+#define ICE_SCRIPT_LEXER_H
 
 #include "../util/types.h"
 #include "token.h"
@@ -10,9 +10,7 @@
 
 namespace Ice { namespace Script {
 
-  struct LexerMode;
-  struct LexerState;
-  class  Lexer;
+  class Lexer;
 
   /////////////////////////////////
 
@@ -42,23 +40,7 @@ namespace Ice { namespace Script {
     static LexerMode Number;
     static LexerMode HexNumber;
     static LexerMode BinNumber;
-  };
-
-  /////////////////////////////////
-
-  struct LexerState
-  {
-    i32 char_index = -1;
-
-    i32 line   = 1;
-    i32 column = 1;
-
-    LexerMode* mode;
-
-    std::string filename;
-    std::string source;
-
-    std::stack<u32> line_lengths;
+    static LexerMode OctNumber;
   };
 
   /////////////////////////////////
@@ -67,9 +49,10 @@ namespace Ice { namespace Script {
   {
   public:
     void Run( const std::string& filename );
+    void Reset();
 
     const Token* NextToken();
-          void   PrevToken();
+    const Token* PeekToken( i32 n );
 
     char NextChar();
     char PeekChar( i32 n );
@@ -77,20 +60,23 @@ namespace Ice { namespace Script {
     void AddToken( const std::string& lexeme, TokenType type );
 
   private:
-    // void ReadFile();
+    i32 _char_index = -1;
 
-    void StateStore();
-    bool StateRestore();
+    i32 _line   = 1;
+    i32 _column = 1;
 
-  private:
-    LexerState* _state;
+    LexerMode* _mode;
+
+    std::string _filename;
+    std::string _source;
+
+    std::stack<u32> _line_lengths;
 
     i32 _token_index = -1;
 
-    std::vector<Token>      _tokens;
-    std::stack <LexerState> _states;
+    std::vector<Token> _tokens;
   };
 
 } }
 
-#endif // PNL_LEXER_H
+#endif // ICE_SCRIPT_LEXER_H

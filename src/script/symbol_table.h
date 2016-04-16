@@ -1,5 +1,5 @@
-#ifndef PNL_SYMBOL_TABLE_H
-#define PNL_SYMBOL_TABLE_H
+#ifndef ICE_SCRIPT_SYMBOL_TABLE_H
+#define ICE_SCRIPT_SYMBOL_TABLE_H
 
 #include "../util/types.h"
 
@@ -23,41 +23,21 @@ namespace Ice { namespace Script {
     STRUCT,
     ENUM,
     INTERFACE,
-    ARRAY
-  };
-
-  /////////////////////////////////
-
-  enum class DataType
-  {
-    VOID,
-    I8,
-    I16,
-    I32,
-    I64,
-    U8,
-    U16,
-    U32,
-    U64,
-    F32,
-    F64,
-    BOOLEAN,
-    CHAR,
-    STRING
+    ARRAY,
+    TYPE,
   };
 
   /////////////////////////////////
 
   struct VariableInfo
   {
-    DataType type;
   };
 
   /////////////////////////////////
 
   struct FunctionInfo
   {
-    DataType return_type;
+    // DataType return_type;
     u32      number_args;
 
     VariableInfo* args;
@@ -92,6 +72,7 @@ namespace Ice { namespace Script {
   };
 
   /////////////////////////////////
+
   struct ArrayInfo
   {
   };
@@ -130,4 +111,4 @@ namespace Ice { namespace Script {
 
 } }
 
-#endif // PNL_SYMBOL_TABLE_H
+#endif // ICE_SCRIPT_SYMBOL_TABLE_H

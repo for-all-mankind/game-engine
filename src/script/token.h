@@ -1,5 +1,5 @@
-#ifndef PNL_TOKEN_H
-#define PNL_TOKEN_H
+#ifndef ICE_SCRIPT_TOKEN_H
+#define ICE_SCRIPT_TOKEN_H
 
 #include <string>
 
@@ -9,45 +9,43 @@ namespace Ice { namespace Script {
   {
     TOK_IDENTIFIER,        /* ^([_a-zA-Z][_a-zA-Z0-9]*) */
 
-    LIT_BYTE,              /* -?[0-9]b         */
-    LIT_SHORT,             /* -?[0-9]s         */
-    LIT_INT,               /* -?[0-9]i?        */
-    LIT_LONG,              /* -?[0-9]l         */
-    LIT_UBYTE,             /* [0-9]ub          */
-    LIT_USHORT,            /* [0-9]us          */
-    LIT_UINT,              /* [0-9]ui?         */
-    LIT_ULONG,             /* [0-9]ul          */
-    LIT_FLOAT,             /* -?[0-9]\.[0-9]f  */
-    LIT_DOUBLE,            /* -?[0-9]\.[0-9]d? */
-    LIT_HEX,               /* 0x[0-9a-fA-F]+   */
-    LIT_BOOLEAN,           /* (true|false)     */
-    LIT_CHAR,              /* '[^']'           */
-    LIT_STRING,            /* "[^"]+"          */
-    LIT_NULL,              /* null             */
+    LIT_INT,               /* ^([-+0-9][0-9]+)           */
+    LIT_UINT,              /* ^([0-9]+u)                 */
+    LIT_FLOAT,             /* ^([-+0-9][0-9]+\.[0-9]+f)  */
+    LIT_DOUBLE,            /* ^([-+0-9][0-9]+\.[0-9]+d?) */
+    LIT_HEX,               /* ^(0x[0-9a-fA-F]+)          */
+    LIT_BINARY,            /* ^(0b[0-1]+)                */
+    LIT_OCTAL,             /* ^(0o[0-7]+)                */
+    LIT_BOOLEAN,           /* ^(true|false)              */
+    LIT_CHAR,              /* ^('[^']')                  */
+    LIT_STRING,            /* ^("[^"]*")                 */
+    LIT_NULL,              /* ^(null)                    */
 
-    KW_CONST,             /* const   */
-    KW_MUTABLE,           /* mutable */
+    KW_USING,             /* using    */
+    KW_AS,                /* using    */
+    KW_DELEGATE,          /* delegate */
+    KW_THIS,              /* this     */
+    KW_END,               /* end      */
+    KW_STATIC,            /* static   */
 
     KW_IMPORT,            /* import    */
     KW_EXPORT,            /* export    */
-    KW_USING,             /* using     */
     KW_NAMESPACE,         /* namespace */
-
     KW_FUNC,              /* func      */
-    KW_RETURN,            /* return    */
-    KW_YIELD,             /* yield     */
     KW_STRUCT,            /* struct    */
     KW_ENUM,              /* enum      */
     KW_CLASS,             /* class     */
-    KW_THIS,              /* this      */
+    KW_OBJECT,            /* object    */
     KW_INTERFACE,         /* interface */
-    KW_DELEGATE,          /* delegate  */
-    KW_TYPEDEF,           /* typedef   */
+    KW_TYPE,              /* type      */
 
-    KW_NEW,               /* new       */
-    KW_DELETE,            /* delete    */
-    KW_OWNER,             /* owner     */
-    KW_END,               /* end       */
+    KW_NEW,               /* new     */
+    KW_DELETE,            /* delete  */
+    KW_OWNER,             /* owner   */
+    KW_VAR,               /* var     */
+    KW_LET,               /* let     */
+    KW_MUTABLE,           /* mutable */
+    KW_CAST,              /* cast    */
 
     KW_IF,                /* if       */
     KW_ELSE,              /* else     */
@@ -55,6 +53,8 @@ namespace Ice { namespace Script {
     KW_WHILE,             /* while    */
     KW_BREAK,             /* break    */
     KW_CONTINUE,          /* continue */
+    KW_RETURN,            /* return   */
+    KW_YIELD,             /* yield    */
 
     TOK_LPAREN,            /* ( */
     TOK_RPAREN,            /* ) */
@@ -66,6 +66,7 @@ namespace Ice { namespace Script {
     TOK_EQUAL,             /* =  */
     TOK_EQUAL_EQUAL,       /* == */
     TOK_COLON,             /* :  */
+    TOK_COLON_COLON,       /* :: */
     TOK_COLON_EQUAL,       /* := */
     TOK_SEMI_COLON,        /* ;  */
     TOK_FUNC_ARROW,        /* -> */
@@ -122,4 +123,4 @@ namespace Ice { namespace Script {
 
 } }
 
-#endif // PNL_TOKEN_H
+#endif // ICE_SCRIPT_TOKEN_H

@@ -10,7 +10,7 @@ namespace Ice
       glfwSetWindowShouldClose( window, true );
   }
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   Window::Window( const WindowConfig&& cfg )
     : _window( nullptr )

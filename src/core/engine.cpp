@@ -14,7 +14,7 @@ namespace Ice
               << std::endl;
   }
 
-  /////////////////////////////////////
+  /////////////////////////////////
 
   Engine::Engine()
    : _window  ( nullptr )

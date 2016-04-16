@@ -70,22 +70,27 @@ namespace Ice { namespace Script {
     }
 
     // Keywords
-    if      ( buffer == "const"     ) lexer->AddToken( buffer, KW_CONST     );
+    if      ( buffer == "var"       ) lexer->AddToken( buffer, KW_VAR       );
+    else if ( buffer == "let"       ) lexer->AddToken( buffer, KW_LET       );
     else if ( buffer == "mutable"   ) lexer->AddToken( buffer, KW_MUTABLE   );
+    else if ( buffer == "cast"      ) lexer->AddToken( buffer, KW_CAST      );
     else if ( buffer == "import"    ) lexer->AddToken( buffer, KW_IMPORT    );
     else if ( buffer == "export"    ) lexer->AddToken( buffer, KW_EXPORT    );
     else if ( buffer == "using"     ) lexer->AddToken( buffer, KW_USING     );
     else if ( buffer == "namespace" ) lexer->AddToken( buffer, KW_NAMESPACE );
+    else if ( buffer == "as"        ) lexer->AddToken( buffer, KW_AS        );
     else if ( buffer == "func"      ) lexer->AddToken( buffer, KW_FUNC      );
     else if ( buffer == "return"    ) lexer->AddToken( buffer, KW_RETURN    );
     else if ( buffer == "yield"     ) lexer->AddToken( buffer, KW_YIELD     );
     else if ( buffer == "struct"    ) lexer->AddToken( buffer, KW_STRUCT    );
     else if ( buffer == "enum"      ) lexer->AddToken( buffer, KW_ENUM      );
     else if ( buffer == "class"     ) lexer->AddToken( buffer, KW_CLASS     );
+    else if ( buffer == "object"    ) lexer->AddToken( buffer, KW_OBJECT    );
     else if ( buffer == "this"      ) lexer->AddToken( buffer, KW_THIS      );
+    else if ( buffer == "static"    ) lexer->AddToken( buffer, KW_STATIC    );
     else if ( buffer == "interface" ) lexer->AddToken( buffer, KW_INTERFACE );
     else if ( buffer == "delegate"  ) lexer->AddToken( buffer, KW_DELEGATE  );
-    else if ( buffer == "typedef"   ) lexer->AddToken( buffer, KW_TYPEDEF   );
+    else if ( buffer == "type"      ) lexer->AddToken( buffer, KW_TYPE      );
     else if ( buffer == "new"       ) lexer->AddToken( buffer, KW_NEW       );
     else if ( buffer == "delete"    ) lexer->AddToken( buffer, KW_DELETE    );
     else if ( buffer == "owner"     ) lexer->AddToken( buffer, KW_OWNER     );
@@ -160,6 +165,11 @@ namespace Ice { namespace Script {
       if ( n == '=' )
       {
         lexer->AddToken( ":=", TOK_COLON_EQUAL );
+        lexer->NextChar();
+      }
+      else if ( n == ':' )
+      {
+        lexer->AddToken( "::", TOK_COLON_COLON );
         lexer->NextChar();
       }
       else
@@ -496,9 +506,11 @@ namespace Ice { namespace Script {
     bool is_unsigned = false;
 
     if ( c == '0' && n == 'x' )
-    {
       return &LexerMode::HexNumber;
-    }
+    else if ( c == '0' && n == 'b' )
+      return &LexerMode::BinNumber;
+    else if ( c == '0' && n == 'o' )
+      return &LexerMode::OctNumber;
     else
     {
       while ( true )
@@ -535,46 +547,10 @@ namespace Ice { namespace Script {
         {
           if ( is_int_type )
           {
-            switch ( c )
-            {
-              case 'b':
-                lexer->AddToken( buffer, LIT_BYTE );
-                break;
-              case 's':
-                lexer->AddToken( buffer, LIT_SHORT );
-                break;
-              case 'i':
-                lexer->AddToken( buffer, LIT_INT );
-                break;
-              case 'l':
-                lexer->AddToken( buffer, LIT_LONG );
-                break;
-              case 'u':
-              {
-                switch( c )
-                {
-                  case 'b':
-                    lexer->AddToken( buffer, LIT_UBYTE );
-                    break;
-                  case 's':
-                    lexer->AddToken( buffer, LIT_USHORT );
-                    break;
-                  case 'i':
-                    lexer->AddToken( buffer, LIT_UINT );
-                    break;
-                  case 'l':
-                    lexer->AddToken( buffer, LIT_ULONG );
-                    break;
-                  default:
-                    lexer->AddToken( buffer, LIT_UINT );
-                    break;
-                }
-                break;
-              }
-              default:
-                lexer->AddToken( buffer, LIT_INT );
-                break;
-            }
+            if ( c == 'u' )
+              lexer->AddToken( buffer, LIT_UINT );
+            else
+              lexer->AddToken( buffer, LIT_INT );
           }
           else
           {
@@ -587,7 +563,7 @@ namespace Ice { namespace Script {
                 lexer->AddToken( buffer, LIT_DOUBLE );
                 break;
               default:
-                lexer->AddToken( buffer, LIT_FLOAT );
+                lexer->AddToken( buffer, LIT_DOUBLE );
                 break;
             }
           }
@@ -633,6 +609,74 @@ namespace Ice { namespace Script {
   }
 
   /////////////////////////////////
+
+  LexerMode* mode_bin_number( Lexer* lexer )
+  {
+    std::string buffer;
+    char        c;
+
+    // Skip over the '0x'
+    lexer->NextChar();
+    lexer->NextChar();
+
+    while ( true )
+    {
+      c = lexer->PeekChar( 1 );
+
+      if ( c == '0' || c == '1' )
+      {
+        buffer += c;
+        lexer->NextChar();
+        continue;
+      }
+
+      break;
+    }
+
+    lexer->AddToken( buffer, LIT_HEX );
+
+    return &LexerMode::Start;
+  }
+
+  /////////////////////////////////
+
+  LexerMode* mode_oct_number( Lexer* lexer )
+  {
+    std::string buffer;
+    char        c;
+
+    // Skip over the '0x'
+    lexer->NextChar();
+    lexer->NextChar();
+
+    while ( true )
+    {
+      c = lexer->PeekChar( 1 );
+
+      // if ( c >= '0' && c <= '7' ) // Untested
+      if ( c == '0'
+        || c == '1'
+        || c == '2'
+        || c == '3'
+        || c == '4'
+        || c == '5'
+        || c == '6'
+        || c == '7' )
+      {
+        buffer += c;
+        lexer->NextChar();
+        continue;
+      }
+
+      break;
+    }
+
+    lexer->AddToken( buffer, LIT_HEX );
+
+    return &LexerMode::Start;
+  }
+
+  /////////////////////////////////
   // Initialise the lexing states.
 
   LexerMode LexerMode::Start            = { &mode_start              };
@@ -646,6 +690,8 @@ namespace Ice { namespace Script {
   LexerMode LexerMode::Char             = { &mode_char               };
   LexerMode LexerMode::Number           = { &mode_number             };
   LexerMode LexerMode::HexNumber        = { &mode_hex_number         };
+  LexerMode LexerMode::BinNumber        = { &mode_bin_number         };
+  LexerMode LexerMode::OctNumber        = { &mode_oct_number         };
 
   /////////////////////////////////
 
@@ -660,13 +706,28 @@ namespace Ice { namespace Script {
     // we can start lexing the new file.
     StateStore();
 
-    _state->filename = filename;
+    _filename = filename;
+    _mode     = &LexerMode::Start;
 
     // Get the new program source.
-    read_file( _state->filename, &(_state->source) );
+    read_file( _filename, &(_source) );
 
-    // Set the initial mode for this file.
-    _state->mode = &LexerMode::Start;
+    while( true )
+    {
+      _mode = _mode->Func( this );
+
+      if ( *(_mode) == LexerMode::End )
+        break;
+    }
+
+    _mode->Func( this );
+  }
+
+  /////////////////////////////////
+
+  void Lexer::Reset()
+  {
+    _token_index = -1;
   }
 
   /////////////////////////////////
@@ -678,90 +739,33 @@ namespace Ice { namespace Script {
     if ( _token_index < static_cast<i32>( _tokens.size() ) - 1 )
       ++_token_index;
 
-    // If there are no tokens ahead then
-    // we must try and get a new one.
-    else
-    {
-      bool more_states = true;
-
-      u32 n_tokens_before   = _tokens.size();
-      u32 n_loop_iterations = 0;
-
-      // Should have found a token my this time,
-      // but we may end up in an infinite loop or
-      // the programmer may have a lot of empty lines
-      // and comments.
-      const u32 n_loop_max = 1000000;
-
-      while( true )
-      {
-        // If we are at the end then we should try and
-        // restore a state.
-        if ( *(_state->mode) == LexerMode::End )
-          more_states = StateRestore();
-        else
-          _state->mode = _state->mode->Func( this );
-
-        // If the vector has increased in size then we have
-        // found another token and we should increment the
-        // counter and return it.
-        if ( _tokens.size() > n_tokens_before )
-        {
-          ++_token_index;
-          break;
-        }
-
-        // If there are no more states then we
-        // should run the end mode function and
-        // return.
-        if ( !more_states )
-        {
-          _state->mode->Func( this );
-          break;
-        }
-
-        ++n_loop_iterations;
-
-        if ( n_loop_iterations > n_loop_max )
-        {
-          std::cout << "I think I got stuck in a loop, so I quit..." << std::endl;
-          exit( EXIT_FAILURE );
-        }
-      }
-    }
-
-    if ( _tokens.size() <= 0 )
-    {
-      exit( EXIT_FAILURE );
-    }
-
     return &(_tokens[ _token_index ]);
   }
 
-  void Lexer::PrevToken()
+  const Token* Lexer::PeekToken( i32 n )
   {
-    // The first index is -1 because 'NextToken()'
-    // will increment it before it returns the token.
-    if ( _token_index > -1 )
-      --_token_index;
+    if ( _token_index + n < static_cast<i32>( _tokens.size() ) )
+      return &(_tokens[ _token_index + n ]);
+
+    return nullptr;
   }
 
   /////////////////////////////////
 
   char Lexer::NextChar()
   {
-    if ( _state->char_index < static_cast<i32>( _state->source.size() ) )
+    if ( _char_index < static_cast<i32>( _source.size() ) )
     {
-      ++_state->char_index;
-      ++_state->column;
+      ++_char_index;
+      ++_column;
     }
 
-    char c = _state->source[ _state->char_index ];
+    char c = _source[ _char_index ];
 
     if ( c == '\n' )
     {
-      ++_state->line;
-      _state->column = 1;
+      ++_line;
+      _column = 1;
     }
 
     return c;
@@ -769,8 +773,8 @@ namespace Ice { namespace Script {
 
   char Lexer::PeekChar( i32 n )
   {
-    if ( _state->char_index + n < static_cast<i32>( _state->source.size() ) )
-      return _state->source[ _state->char_index + n ];
+    if ( _char_index + n < static_cast<i32>( _source.size() ) )
+      return _source[ _char_index + n ];
 
     return '\0';
   }
@@ -779,7 +783,7 @@ namespace Ice { namespace Script {
 
   void Lexer::AddToken( const std::string& lexeme, TokenType type )
   {
-    i32 column = _state->column - static_cast<i32>( lexeme.length() );
+    i32 column = _column - static_cast<i32>( lexeme.length() );
 
     // The length of the lexeme is the length of
     // the string minus the two quotation characters.
@@ -789,58 +793,9 @@ namespace Ice { namespace Script {
     _tokens.emplace_back( Token{
       lexeme,
       type,
-      _state->line,
+      _line,
       column
     });
-  }
-
-  /////////////////////////////////
-
-  // void Lexer::ReadFile()
-  // {
-  //   std::ifstream file;
-
-  //   std::stringstream source;
-  //   std::string       line;
-
-  //   file.open( _state->filename );
-
-  //   if ( file.is_open() )
-  //   {
-  //     while ( file.good() )
-  //     {
-  //       getline( file, line );
-  //       source << line + '\n';
-  //     }
-  //   }
-  //   else
-  //   {
-  //     std::cout << "Unable to open file: " << _state->filename << std::endl;
-  //     exit( EXIT_FAILURE );
-  //   }
-
-  //   _state->source = source.str();
-
-  //   file.close();
-  // }
-
-  void Lexer::StateStore()
-  {
-    _states.emplace( LexerState{} );
-    _state = &_states.top();
-  }
-
-  bool Lexer::StateRestore()
-  {
-    u32 state_size = _states.size();
-
-    if ( state_size <= 1 )
-      return false;
-
-    _states.pop();
-    _state = &_states.top();
-
-    return true;
   }
 
 } }
