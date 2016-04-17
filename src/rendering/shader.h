@@ -13,21 +13,22 @@ namespace Ice
   class Shader
   {
   public:
-    Shader( std::string path );
+    Shader( std::string vertex, std::string fragment );
     ~Shader();
 
-    void SetUniform( const GLchar* name, i32  value );
-    void SetUniform( const GLchar* name, f32  value );
-    void SetUniform( const GLchar* name, i32* values, i32 count );
-    void SetUniform( const GLchar* name, f32* values, i32 count );
-    void SetUniform( const GLchar* name, const  Vec2& vec  );
-    void SetUniform( const GLchar* name, const  Vec3& vec  );
-    void SetUniform( const GLchar* name, const  Vec4& vec  );
-    void SetUniform( const GLchar* name, const  Mat4& mat  );
+    void RegisterUniform( const GLchar* name );
 
-    void Bind  () const;
-    void Unbind() const;
+    void UpdateUniform( const GLchar* name, i32  value );
+    void UpdateUniform( const GLchar* name, f32  value );
+    void UpdateUniform( const GLchar* name, i32* values, i32 count );
+    void UpdateUniform( const GLchar* name, f32* values, i32 count );
+    void UpdateUniform( const GLchar* name, const  Vec2& vec  );
+    void UpdateUniform( const GLchar* name, const  Vec3& vec  );
+    void UpdateUniform( const GLchar* name, const  Vec4& vec  );
+    void UpdateUniform( const GLchar* name, const  Mat4& mat  );
 
+    void Bind() const;
+    void UnBind() const;
   private:
     GLint  GetUniformLocation( const GLchar* name );
     GLuint Load( GLuint type, std::string& name );

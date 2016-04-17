@@ -125,6 +125,7 @@ namespace Ice { namespace Script {
       top_stmt ::= type_decl_stmt .
       top_stmt ::= stmt .
     */
+
     const Token* t1 = _lexer.PeekToken( 0 );
     const Token* t2 = _lexer.PeekToken( 1 );
     const Token* t3 = _lexer.PeekToken( 2 );
@@ -153,17 +154,14 @@ namespace Ice { namespace Script {
         else if ( t3->type == KW_STRUCT )
           StructDeclStmt();
 
-        else if ( t3->type == KW_NAMESPACE )
-          NamespaceDeclStmt();
-
         else if ( t3->type == KW_ENUM )
           EnumDeclStmt();
 
         else if ( t3->type == KW_TYPE )
           TypeDeclStmt();
 
-        else;
-          // TODO: complain...
+        else
+          VarDeclStmt();
       }
 
       Stmt();
@@ -206,7 +204,7 @@ namespace Ice { namespace Script {
 
     while ( !Match( TOK_RPAREN ) )
     {
-      // VarDeclStmt();
+      VarDeclStmt();
       Match( TOK_COMMA );
     }
 
@@ -225,13 +223,6 @@ namespace Ice { namespace Script {
       type ::= TOK_IDENTIFIER .
       type ::= TOK_LSQUARE LIT_INT TOK_RSQUARE type .
       type ::= TOK_CARET TOK_IDENTIFIER .
-      type ::= TOK_CARET KW_FUNC TOK_LPAREN type_args_list TOK_RPAREN TOK_FUNC_ARROW type .
-
-      type_args_list ::= type_args_list type_arg .
-      type_args_list ::= type_arg .
-
-      type_arg ::= type TOK_COMMA .
-      type_arg ::= type .
     */
 
     if ( Match( TOK_IDENTIFIER ) )
@@ -244,28 +235,37 @@ namespace Ice { namespace Script {
     }
     else
     {
-      Expect( TOK_CARET  );
-
-      if ( Match( TOK_IDENTIFIER ) )
-        ; // TODO: lookup type.
-      else
-      {
-        Expect( KW_FUNC    );
-        Expect( TOK_LPAREN );
-
-        while ( !Match( TOK_RPAREN ) )
-        {
-          Type();
-          Match( TOK_COMMA );
-        }
-
-        Expect( TOK_RPAREN );
-
-        Expect( TOK_FUNC_ARROW );
-
-        Type();
-      }
+      Expect( TOK_CARET      );
+      Expect( TOK_IDENTIFIER );
     }
+  }
+
+  void Parser::FuncPtrType()
+  {
+    /*
+      type ::= TOK_CARET KW_FUNC TOK_LPAREN type_args_list TOK_RPAREN TOK_FUNC_ARROW type .
+
+      type_args_list ::= type_args_list type_arg .
+      type_args_list ::= type_arg .
+
+      type_arg ::= type TOK_COMMA .
+      type_arg ::= type .
+    */
+
+    Expect( KW_FUNC    );
+    Expect( TOK_LPAREN );
+
+    while ( !Match( TOK_RPAREN ) )
+    {
+      Type();
+      Match( TOK_COMMA );
+    }
+
+    Expect( TOK_RPAREN );
+
+    Expect( TOK_FUNC_ARROW );
+
+    Type();
   }
 
   /////////////////////////////////
@@ -354,28 +354,9 @@ namespace Ice { namespace Script {
 
     while ( !Match( KW_END ) )
     {
-      // VarDeclStmt();
+      VarDeclStmt();
       Expect( TOK_SEMI_COLON );
     }
-  }
-
-  /////////////////////////////////
-
-  void Parser::NamespaceDeclStmt()
-  {
-    /*
-      namespace_decl_stmt ::= TOK_IDENTIFIER TOK_COLON KW_NAMESPACE top_stmt_list KW_END .
-
-      top_stmt_list ::= top_stmt_list top_stmt .
-      top_stmt_list ::= top_stmt .
-    */
-
-    Expect( TOK_IDENTIFIER );
-    Expect( TOK_COLON      );
-    Expect( KW_NAMESPACE   );
-
-    while ( !Match( KW_END ) )
-      TopStmt();
   }
 
   /////////////////////////////////
@@ -441,19 +422,48 @@ namespace Ice { namespace Script {
       const Token* t = _lexer.PeekToken( 1 );
 
       if ( t->type == TOK_EQUAL );
-        // VarAssignStmt();
+        VarAssignStmt();
 
       else if ( t->type == TOK_COLON_EQUAL );
-        // VarDeclInferStmt();
+        VarDeclInferStmt();
 
       else if ( t->type == TOK_COLON );
-        // VarDeclAssignStmt(); // May return a 'VarDeclStmt'
+        VarDeclAssignStmt(); // May return a 'VarDeclStmt'
 
       else;
-        // TopExpr();
+        TopExpr();
     }
   }
 
+  /////////////////////////////////
+
+  void VarAssignStmt()
+  {
+
+  }
+
+  /////////////////////////////////
+
+  void Parser::VarDeclStmt()
+  {
+
+  }
+
+  /////////////////////////////////
+
+  void Parser::VarDeclAssignStmt()
+  {
+
+  }
+
+  /////////////////////////////////
+
+  void Parser::VarDeclInferStmt()
+  {
+
+  }
+
+  /////////////////////////////////
   /////////////////////////////////
 
   bool Parser::Match( TokenType match_type )

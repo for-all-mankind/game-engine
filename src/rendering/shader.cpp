@@ -6,15 +6,12 @@
 
 namespace Ice
 {
-  Shader::Shader( std::string path )
+  Shader::Shader( std::string vertex, std::string fragment )
   {
     _program = glCreateProgram();
 
-    std::string vert = path + ".vert";
-    std::string frag = path + ".frag";
-
-    _vert = Load( GL_VERTEX_SHADER  , vert );
-    _frag = Load( GL_FRAGMENT_SHADER, frag );
+    _vert = Load( GL_VERTEX_SHADER  , vertex   );
+    _frag = Load( GL_FRAGMENT_SHADER, fragment );
 
     Compile();
   }
@@ -27,42 +24,48 @@ namespace Ice
     glDeleteProgram( _program );
   }
 
-  void Shader::SetUniform( const GLchar* name, i32 value )
+  void Shader::RegisterUniform( const GLchar* name )
+  {
+    GLint uniform = glGetUniformLocation( _program, name );
+    _uniform_locations.emplace( name, uniform );
+  }
+
+  void Shader::UpdateUniform( const GLchar* name, i32 value )
   {
     glUniform1i( GetUniformLocation( name ), value );
   }
 
-  void Shader::SetUniform( const GLchar* name, f32 value )
+  void Shader::UpdateUniform( const GLchar* name, f32 value )
   {
     glUniform1f( GetUniformLocation( name ), value );
   }
 
-  void Shader::SetUniform( const GLchar* name, i32* values, i32 count )
+  void Shader::UpdateUniform( const GLchar* name, i32* values, i32 count )
   {
     glUniform1iv( GetUniformLocation( name ), count, values );
   }
 
-  void Shader::SetUniform( const GLchar* name, f32* values, i32 count )
+  void Shader::UpdateUniform( const GLchar* name, f32* values, i32 count )
   {
     glUniform1fv( GetUniformLocation( name ), count, values );
   }
 
-  void Shader::SetUniform( const GLchar* name, const Vec2& vec )
+  void Shader::UpdateUniform( const GLchar* name, const Vec2& vec )
   {
     glUniform2f( GetUniformLocation( name ), vec.X, vec.Y );
   }
 
-  void Shader::SetUniform( const GLchar* name, const Vec3& vec )
+  void Shader::UpdateUniform( const GLchar* name, const Vec3& vec )
   {
     glUniform3f( GetUniformLocation( name ), vec.X, vec.Y, vec.Z );
   }
 
-  void Shader::SetUniform( const GLchar* name, const Vec4& vec )
+  void Shader::UpdateUniform( const GLchar* name, const Vec4& vec )
   {
     glUniform4f( GetUniformLocation( name ), vec.X, vec.Y, vec.Z, vec.W );
   }
 
-  void Shader::SetUniform( const GLchar* name, const Mat4& mat )
+  void Shader::UpdateUniform( const GLchar* name, const Mat4& mat )
   {
     glUniformMatrix4fv( GetUniformLocation( name ), 1, GL_FALSE, mat.Elements );
   }
@@ -86,7 +89,7 @@ namespace Ice
     glUseProgram( _program );
   }
 
-  void Shader::Unbind() const
+  void Shader::UnBind() const
   {
     glUseProgram( 0 );
   }

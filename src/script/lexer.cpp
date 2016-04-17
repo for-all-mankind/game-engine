@@ -70,14 +70,11 @@ namespace Ice { namespace Script {
     }
 
     // Keywords
-    if      ( buffer == "var"       ) lexer->AddToken( buffer, KW_VAR       );
-    else if ( buffer == "let"       ) lexer->AddToken( buffer, KW_LET       );
-    else if ( buffer == "mutable"   ) lexer->AddToken( buffer, KW_MUTABLE   );
+    if      ( buffer == "mutable"   ) lexer->AddToken( buffer, KW_MUTABLE   );
     else if ( buffer == "cast"      ) lexer->AddToken( buffer, KW_CAST      );
     else if ( buffer == "import"    ) lexer->AddToken( buffer, KW_IMPORT    );
     else if ( buffer == "export"    ) lexer->AddToken( buffer, KW_EXPORT    );
     else if ( buffer == "using"     ) lexer->AddToken( buffer, KW_USING     );
-    else if ( buffer == "namespace" ) lexer->AddToken( buffer, KW_NAMESPACE );
     else if ( buffer == "as"        ) lexer->AddToken( buffer, KW_AS        );
     else if ( buffer == "func"      ) lexer->AddToken( buffer, KW_FUNC      );
     else if ( buffer == "return"    ) lexer->AddToken( buffer, KW_RETURN    );
@@ -98,6 +95,7 @@ namespace Ice { namespace Script {
     else if ( buffer == "if"        ) lexer->AddToken( buffer, KW_IF        );
     else if ( buffer == "else"      ) lexer->AddToken( buffer, KW_ELSE      );
     else if ( buffer == "for"       ) lexer->AddToken( buffer, KW_FOR       );
+    else if ( buffer == "in"        ) lexer->AddToken( buffer, KW_IN        );
     else if ( buffer == "while"     ) lexer->AddToken( buffer, KW_WHILE     );
     else if ( buffer == "break"     ) lexer->AddToken( buffer, KW_BREAK     );
     else if ( buffer == "continue"  ) lexer->AddToken( buffer, KW_CONTINUE  );

@@ -2,6 +2,7 @@
 #define ICE_VEC2_H
 
 #include "../util/types.h"
+#include "maths_util.h"
 
 #include <iostream>
 
@@ -12,6 +13,17 @@ namespace Ice
   public:
     Vec2();
     Vec2( f32 x, f32 y );
+
+    f32 Length  () const;
+    f32 LengthSq() const;
+
+    f32 Distance  ( const Vec2& other ) const;
+    f32 DistanceSq( const Vec2& other ) const;
+
+    f32 Dot( const Vec2& other ) const;
+
+    Vec2& Normalise ();
+    Vec2  Normalised() const;
 
     Vec2 operator+( const Vec2& r ) const;
     Vec2 operator-( const Vec2& r ) const;

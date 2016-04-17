@@ -2,7 +2,6 @@
 #define ICE_SCRIPT_PARSER_H
 
 #include "symbol_table.h"
-#include "type_table.h"
 #include "ast.h"
 #include "lexer.h"
 
@@ -30,7 +29,6 @@ namespace Ice { namespace Script {
     void ClassDeclStmt();
     void ObjectDeclStmt();
     void StructDeclStmt();
-    void NamespaceDeclStmt();
     void EnumDeclStmt();
     void TypeDeclStmt();
     void Stmt();
@@ -41,8 +39,6 @@ namespace Ice { namespace Script {
   private:
     SymbolTable* _global;
     Lexer        _lexer;
-
-    TypeTable _type_table;
   };
 
 } }

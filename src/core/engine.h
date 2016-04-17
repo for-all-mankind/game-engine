@@ -14,13 +14,15 @@ namespace Ice
     Engine();
     ~Engine();
 
+    // One method to rule them.
+    void Run();
+
+  private:
     // The subsystem initialisation methods
     bool InitWindow();
     bool InitAudio();
+    bool InitGUI();
     bool InitMods();
-
-    // One method to rule them.
-    void Run();
 
   private:
     Window*   _window;

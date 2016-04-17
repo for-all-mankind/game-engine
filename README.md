@@ -4,10 +4,11 @@ A game engine written in C++ with it's own custom scripting language.
 
 ## Dependencies
 The libraries that this engine uses are:
+* OpenGL
 * [GLFW3](http://www.glfw.org/)
 * [GLEW](http://glew.sourceforge.net/)
-* OpenGL
-
+* [YSE](http://attr-x.net/yse/)
+* [Newton Dynamics](http://newtondynamics.com/forum/newton.php)
 
 ## IceScript
 
@@ -16,7 +17,8 @@ and modding.
 
 This guide will give a brief overview of the constructs in IceScript.
 
-* [Variables and Constants](#variables-and-constants)
+* [Variables](#variables)
+* [Constants](#constants)
 * [Basic Types](#basic-types)
 * [Printing](#printing)
 * [Comments](#comments)
@@ -32,28 +34,24 @@ This guide will give a brief overview of the constructs in IceScript.
 * [Interfaces](#interfaces)
 * [Custom Types](#custom-types)
 
-### Variables and Constants
+### Variables
 
 Just like the vast majority of programming languages IceScript uses variables to
-store values. These are written as follows:
+store modifiable values. These are written as follows:
 
-    var x = 10;
-    var a: Int;
+    a: Int;
+    a = 10;
 
-All variables are declared with the keyworld `var`, followed by an identifier.
-Variables don't have to be initialised at the same time they are declared, but
-IceScript is a strictly typed language and so must be able to deduce a type for
-all the variables in any given program. As a result you will either have to
-supply a value or declare a [type](#basic-types).
+    b: Int = 10;
+    b = 20;
 
-Constants are very similar to variables except for the fact that their value
-cannot change after they are declared. They can be lazy initialised.
+    c := 10;
+    c = 20;
 
-    let b = 20;
-    let n: Int;
-
-    b = 10; // Error: b already has a value.
-    n = 10; // Okay : lazy initialisation of n.
+All variables are declared with an identifier followed by either a `:` and a
+[type](#basic-types) or a `:=`. Variables don't have to be initialised at the same time they are
+declared. IceScript is a strictly typed language, but does provide type inference
+as a convenience. See the [types](#basic-types) section for more details.
 
 Identifiers are defined by the following regular expression:
 `[_a-zA-Z][_a-zA-Z0-9]*`
@@ -63,14 +61,25 @@ The first character can be any letter, upper or lower case, between 'a' and 'z'
 or an underscore. Then the following zero or more letters can be any combination
 of upper or lower case letters and numbers.
 
+[Contents](#icescript)
+
+### Constants
+
+Constants are very similar to variables except for the fact that their value
+cannot change after they are declared.
+
+    d :: 20;
+    d = 10; // Error: b already has a value.
+
+
 The type annotations are optional as long as the compiler can work out what type
 the variable or constant is.
 
-    add: func( let a: Int, let b: Int ) -> Int
+    add: func( a: Int, b: Int ) -> Int
       return a + b;
     end
 
-    let foo = add( 1, 2 );
+    foo := add( 1, 2 );
 
 The compiler can infer the type of `foo` by looking at the return type of the
 function `add`.
@@ -78,6 +87,8 @@ function `add`.
 [Contents](#icescript)
 
 ### Printing
+
+TODO: start this section.
 
 [Contents](#icescript)
 
@@ -127,54 +138,196 @@ The basic types are:
 
 There are seven types of numeric literal in this language. They are:
 
-    let int         = 42;
-    let uint        = 42u;
-    let float       = 3.14159f;
-    let double      = 3.14159;
-    let hexidecimal = 0xDEADBEEF;
-    let octal       = 0o76543210;
-    let binary      = 0b10;
+    int         := 42;
+    uint        := 42u;
+    float       := 3.14159f;
+    double      := 3.14159;
+    hexidecimal := 0xDEADBEEF;
+    octal       := 0o76543210;
+    binary      := 0b10;
 
 [Contents](#icescript)
 
 ### Pointers
 
+TODO: start this section.
+
 [Contents](#icescript)
 
 ### If Statements
 
-If
+    if ( true )
+      print( "This will always print" );
+    else
+      print( "This will never print" );
+    end
+
+    if ( false )
+      print( "This will also never print" );
+    else if ( true )
+      print( "This will also always print" );
+    else
+      print( "Finally, this will never print" );
+    end
 
 [Contents](#icescript)
 
 ### Loops
 
+    for ( index := 0; index < 10; ++index )
+      print( index );
+    end
+
+    active_mods :: []String{
+      "base_0.1.0",
+      "other_0.1.0"
+    };
+
+    for ( mod in active_mods )
+      print( mod );
+    end
+
+    start := 1;
+    stop  := 101;
+
+    while ( true )
+      if ( start == stop )
+        break;
+
+      if ( start % 3 == 0 && start % 5 == 0 )
+        print( "FizzBuzz" );
+
+      else if ( start % 3 == 0 )
+        print( "Fizz" );
+
+      else if ( start % 5 == 0 )
+        print( "Buzz" );
+
+      else
+        print( start );
+
+      ++start;
+    end
+
 [Contents](#icescript)
 
 ### Functions
+
+    main: func( args :: []String ) -> Int
+      print( "Hello World" );
+    end
+
+    main();
 
 [Contents](#icescript)
 
 ### Structs
 
+TODO: start this section.
+
 [Contents](#icescript)
 
 ### Enums
+
+    Days: enum
+      MONDAY,
+      TUESDAY,
+      WEDNESDAY,
+      THURSDAY,
+      FRIDAY,
+      SATURDAY,
+      SUNDAY
+    end
 
 [Contents](#icescript)
 
 ### Classes
 
+    Vec3: class
+      X := 0.0f;
+      Y := 0.0f;
+      Z := 0.0f;
+
+      Cross: func( other: ^Vec3 ) -> Vec3
+        return Vec3{ Y * other.Z - Z * other.Y,
+                     Z * other.X - X * other.Z,
+                     X * other.Y - Y * other.X };
+      end
+    end
+
 [Contents](#icescript)
 
 ### Objects
+
+TODO: start this section.
 
 [Contents](#icescript)
 
 ### Interfaces
 
+    Entity: interface
+      GetPosition: func() -> mut ^Vec3;
+    end
+
+    Player: class
+      position: Vec3;
+
+      this: func( x: float, y: float, z: float )
+        position.X = x;
+        position.Y = y;
+        position.Z = z;
+      end
+
+      GetPosition: func() -> mut ^Vec3
+        return &position;
+      end
+    end
+
+    do_something_with_entity_position: func( entity: ^Entity ) -> void
+      position := entity.GetPosition();
+
+      // ...
+    end
+
+    main: func( args :: []String ) -> Int
+      player := Player{ 1.0f, 2.0f, 3.0f };
+
+      do_something_with_entity_position( &player );
+    end
+
 [Contents](#icescript)
 
 ### Custom Types
+
+    ResizeCallback: type ^func( ^Window, UInt, UInt ) -> void;
+
+    Window: class
+      resize_callback: ResizeCallback?;
+
+      width : Uint;
+      height: Uint;
+
+      this: func()
+        resize_callback = null;
+      end
+
+      SetResizeCallback: func( callback: ResizeCallback ) -> void
+        resize_callback = callback;
+      end
+
+      OnResizeEvent: func() -> void
+        if ( resize_callback != null )
+          resize_callback( this, width, height );
+      end
+    end
+
+    on_window_resize: func( window: ^Window, width: UInt, height: UInt ) -> void
+      glViewPort( 0, 0, width, height );
+    end
+
+    main: func( args :: []String ) -> Int
+      window := Window{};
+      window.SetResizeCallback( &on_window_resize );
+    end
 
 [Contents](#icescript)

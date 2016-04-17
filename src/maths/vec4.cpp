@@ -16,6 +16,78 @@ namespace Ice
     , W( w )
   {}
 
+  f32 Vec4::Length() const
+  {
+    return sqrt( X * X
+               + Y * Y
+               + Z * Z
+               + W * W );
+  }
+
+  f32 Vec4::LengthSq() const
+  {
+    return X * X
+         + Y * Y
+         + Z * Z
+         + W * W;
+  }
+
+  f32 Vec4::Distance( const Vec4& other ) const
+  {
+    f32 dx = abs( X - other.X );
+    f32 dy = abs( Y - other.Y );
+    f32 dz = abs( Z - other.Z );
+    f32 dw = abs( W - other.W );
+
+    return sqrt( dx * dx
+               + dy * dy
+               + dz * dz
+               + dw * dw );
+  }
+
+  f32 Vec4::DistanceSq( const Vec4& other ) const
+  {
+    f32 dx = abs( X - other.X );
+    f32 dy = abs( Y - other.Y );
+    f32 dz = abs( Z - other.Z );
+    f32 dw = abs( W - other.W );
+
+    return dx * dx
+         + dy * dy
+         + dz * dz
+         + dw * dw;
+  }
+
+  f32 Vec4::Dot( const Vec4& other ) const
+  {
+    return X * other.X
+         + Y * other.Y
+         + Z * other.Z
+         + W * other.W;
+  }
+
+  Vec4& Vec4::Normalise()
+  {
+    f32 length = Length();
+
+    X /= length;
+    Y /= length;
+    Z /= length;
+    W /= length;
+
+    return *this;
+  }
+
+  Vec4 Vec4::Normalised() const
+  {
+    f32 length = Length();
+
+    return Vec4{ X / length,
+                 Y / length,
+                 Z / length,
+                 W / length };
+  }
+
   const Vec4 Vec4::Zero ( 0.0f, 0.0f, 0.0f, 0.0f );
   const Vec4 Vec4::One  ( 1.0f, 1.0f, 1.0f, 1.0f );
   const Vec4 Vec4::UnitX( 1.0f, 0.0f, 0.0f, 0.0f );

@@ -20,17 +20,42 @@ namespace Ice
    : _window  ( nullptr )
    , _renderer( nullptr )
   {
+    // Initialise the window systems
     glfwInit();
     glfwSetErrorCallback( error_callback );
+
+    // TODO:
+    // Check the status of the subsystems.
+    // At the moment success is assumed.
+
+    // Create a window and initialise the renderer.
+    InitWindow();
+
+    // Initialise the sound systems.
+    // YSE::System().init();
+
+    // Load the GUI sound files.
+    InitAudio();
+
+    // Initialise the GUI system.
+    InitGUI();
+
+    // Load the mod content.
+    InitMods();
   }
 
   Engine::~Engine()
   {
+    // Destroy the window if one exists.
     if ( _window != nullptr )
       delete _window;
 
+    // Destroy the renderer if one exists.
     if ( _renderer != nullptr )
       delete _renderer;
+
+    // Close down the sound system.
+    // YSE::System().close();
 
     glfwTerminate();
   }
@@ -39,8 +64,12 @@ namespace Ice
   {
     std::cout << "Creating window... " << std::endl;
 
+    // TODO:
+    // Use the IceVm to save and load window configuration
+    // files.
+
     WindowConfig cfg;    // The configuration parameters for the window.
-    // PnlVm        pnl;    // An instance of the pnl engine for loading the configuration.
+    // IceVm        ice;    // An instance of the ice engine for loading the configuration.
 
     // bool write_config = false;
 
@@ -51,7 +80,7 @@ namespace Ice
     cfg.fullscreen = false;
 
     // The configuration file path.
-    // std::string window_prefs = "./cfg/window_prefs.pnl";
+    // std::string window_prefs = "./cfg/window_prefs.ice";
 
 
 
@@ -64,37 +93,34 @@ namespace Ice
 
     // TODO:
     // Make these configurable inside the game.
-    _context_ui   .projection = Mat4::Orthographic( -1.0f, 1.0f, -1.0f, 1.0f, 0.01f, 1000.0f );
+    _context_ui.projection = Mat4::Orthographic( -1.0f, 1.0f, -1.0f, 1.0f, 0.01f, 1000.0f );
+    _context_ui.wire_frame = false;
+
     _context_scene.projection = Mat4::Perspective ( 70.0f, 45.0f, 0.01f, 1000.0f );
-
-    // TODO:
-    // Use the PnlVm to save and load window configuration
-    // files.
-
-
-    // TODO:
-    // The rendering engine will be initialised here too,
-    // since OpenGL can't do anything until the context is
-    // created and that is handled by the window.
+    _context_scene.wire_frame = false;
 
     return true;
   }
 
   bool Engine::InitAudio()
   {
-    std::cout << "Loading audio... " << std::endl;
+    std::cout << "Loading audio files... " << std::endl;
+    return true;
+  }
 
-
+  bool Engine::InitGUI()
+  {
+    std::cout << "Initialising GUI systems... " << std::endl;
     return true;
   }
 
   bool Engine::InitMods()
   {
-    std::cout << "Loading mods... " << std::endl;
+    std::cout << "Loading mod content... " << std::endl;
     // TODO:
-    // PnlVm pnl;
+    // IceVm ice;
 
-    // pnl.NewTable();
+    // ice.NewTable();
 
     return true;
   }
@@ -122,7 +148,7 @@ namespace Ice
 
       // Render everything.
       _renderer->Render( _ui   , _context_ui    );
-      _renderer->Render( _scene, _context_scene );
+      // _renderer->Render( _scene, _context_scene );
 
       // Flip the buffers.
       _window->Flip();

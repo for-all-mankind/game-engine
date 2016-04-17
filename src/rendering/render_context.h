@@ -13,6 +13,8 @@ namespace Ice
   struct RenderContext
   {
     Mat4 projection;
+
+    bool wire_frame;
   };
 }
 

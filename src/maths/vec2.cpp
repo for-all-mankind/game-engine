@@ -12,6 +12,60 @@ namespace Ice
     , Y( y )
   {}
 
+  f32 Vec2::Length() const
+  {
+    return sqrt( X * X
+               + Y * Y );
+  }
+
+  f32 Vec2::LengthSq() const
+  {
+    return X * X
+         + Y * Y;
+  }
+
+  f32 Vec2::Distance( const Vec2& other ) const
+  {
+    f32 dx = abs( X - other.X );
+    f32 dy = abs( Y - other.Y );
+
+    return sqrt( dx * dx
+               + dy * dy );
+  }
+
+  f32 Vec2::DistanceSq( const Vec2& other ) const
+  {
+    f32 dx = abs( X - other.X );
+    f32 dy = abs( Y - other.Y );
+
+    return dx * dx
+         + dy * dy;
+  }
+
+  f32 Vec2::Dot( const Vec2& other ) const
+  {
+    return X * other.X
+         + Y * other.Y;
+  }
+
+  Vec2& Vec2::Normalise()
+  {
+    f32 length = Length();
+
+    X /= length;
+    Y /= length;
+
+    return *this;
+  }
+
+  Vec2 Vec2::Normalised() const
+  {
+    f32 length = Length();
+
+    return Vec2{ X / length,
+                 Y / length };
+  }
+
   const Vec2 Vec2::Zero ( 0.0f, 0.0f );
   const Vec2 Vec2::One  ( 1.0f, 1.0f );
   const Vec2 Vec2::UnitX( 1.0f, 0.0f );

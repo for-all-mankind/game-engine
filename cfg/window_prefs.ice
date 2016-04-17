@@ -1,7 +1,26 @@
 WindowMode: object
-  var title        = "Ice Engine";
-  var full_screen  = false;
+  title       :: "Ice Engine";
+  full_screen :: false;
+  width       :: 800;
+  height      :: 600;
+end
 
-  var width : UInt = 800;
-  var height: UInt = 600;
+Window: interface
+end
+
+Window: struct
+end
+
+Days: enum
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY,
+  SUNDAY
+end
+
+main: func() -> Int
+
 end

@@ -7,7 +7,14 @@ namespace Ice
   static void temp_callback( GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods )
   {
     if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-      glfwSetWindowShouldClose( window, true );
+      glfwSetWindowShouldClose( window, GL_TRUE );
+  }
+
+  /////////////////////////////////
+
+  static void on_window_resize( GLFWwindow* window, i32 width, i32 height )
+  {
+    glViewport( 0, 0, width, height );
   }
 
   /////////////////////////////////
@@ -35,14 +42,12 @@ namespace Ice
       exit( EXIT_FAILURE );
     }
 
+    glewExperimental = GL_TRUE;
     if ( glewInit() != GLEW_OK )
     {
       std::cout << "Failed to initialise GLEW." << std::endl;
       exit( EXIT_FAILURE );
     }
-
-    // Register callbacks
-    glfwSetKeyCallback( _window, temp_callback );
   }
 
   Window::~Window()
@@ -82,30 +87,38 @@ namespace Ice
 
   void Window::CreateWindow()
   {
-    GLFWwindow* new_window = nullptr;
+    GLFWwindow*  new_window = nullptr;
+    GLFWmonitor* primary    = nullptr;
+
+    i32 width  = _width;
+    i32 height = _height;
 
     if ( _fullscreen )
     {
-            GLFWmonitor* primary = glfwGetPrimaryMonitor();
-      const GLFWvidmode* mode    = glfwGetVideoMode( primary );
+      primary = glfwGetPrimaryMonitor();
 
-      new_window = glfwCreateWindow( mode->width, mode->height,
-                                     _title.c_str(),
-                                     primary, _window );
-    }
-    else
-    {
-      new_window = glfwCreateWindow( _width, _height,
-                                     _title.c_str(),
-                                     nullptr, _window );
+      const GLFWvidmode* mode = glfwGetVideoMode( primary );
+
+      width  = mode->width;
+      height = mode->height;
     }
 
-    if ( _window != nullptr )
+    new_window = glfwCreateWindow( width, height,
+                                   _title.c_str(),
+                                   primary, _window );
+
+    if ( _window != nullptr );
       glfwDestroyWindow( _window );
 
     _window = new_window;
 
+    glViewport( 0, 0, width, height );
     glfwMakeContextCurrent( _window );
+
+    // Register callbacks
+    glfwSetKeyCallback( _window, temp_callback );
+
+    glfwSetFramebufferSizeCallback( _window, on_window_resize );
   }
 
 

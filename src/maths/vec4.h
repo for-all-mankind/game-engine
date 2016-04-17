@@ -2,6 +2,7 @@
 #define ICE_VEC4_H
 
 #include "../util/types.h"
+#include "maths_util.h"
 
 #include <iostream>
 
@@ -12,6 +13,17 @@ namespace Ice
   public:
     Vec4();
     Vec4( f32 x, f32 y, f32 z, f32 w );
+
+    f32 Length  () const;
+    f32 LengthSq() const;
+
+    f32 Distance  ( const Vec4& other ) const;
+    f32 DistanceSq( const Vec4& other ) const;
+
+    f32 Dot( const Vec4& other ) const;
+
+    Vec4& Normalise ();
+    Vec4  Normalised() const;
 
     Vec4 operator+( const Vec4& r ) const;
     Vec4 operator-( const Vec4& r ) const;
