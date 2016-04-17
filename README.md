@@ -101,7 +101,7 @@ TODO: start this section.
       written across multiple lines.
 
       /*
-        Unlike C/C++, Java and such comments can
+        Unlike C/C++, Java and other such languages, multi-line comments can
         be nested.
       */
     */
@@ -145,6 +145,8 @@ There are seven types of numeric literal in this language. They are:
     hexidecimal := 0xDEADBEEF;
     octal       := 0o76543210;
     binary      := 0b10;
+
+Hexidecimal, octal and binary are all 32 bit integers.
 
 [Contents](#icescript)
 
@@ -193,18 +195,17 @@ TODO: start this section.
     while ( true )
       if ( start == stop )
         break;
+      end
 
       if ( start % 3 == 0 && start % 5 == 0 )
         print( "FizzBuzz" );
-
       else if ( start % 3 == 0 )
         print( "Fizz" );
-
       else if ( start % 5 == 0 )
         print( "Buzz" );
-
       else
         print( start );
+      end
 
       ++start;
     end
