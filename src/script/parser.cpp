@@ -130,15 +130,19 @@ namespace Ice { namespace Script {
     const Token* t2 = _lexer.PeekToken( 1 );
     const Token* t3 = _lexer.PeekToken( 2 );
 
-    if ( t1 == nullptr
-      || t2 == nullptr
-      || t3 == nullptr );
-      // TODO: complain...
+    if ( t1 == nullptr )
+      ; // TODO: complain...
 
     if ( t1->type == TOK_IDENTIFIER )
     {
+      if ( t2 == nullptr )
+        ; // TODO: complain...
+
       if ( t2->type == TOK_COLON )
       {
+        if ( t3 == nullptr )
+          ; // TODO: complain...
+
         if ( t3->type == KW_FUNC )
           FuncDeclStmt();
 
@@ -166,10 +170,10 @@ namespace Ice { namespace Script {
 
       Stmt();
     }
+    else if ( t1->type == KW_SCOPE )
+      AnonScope();
     else
-    {
-      // TODO: complain...
-    }
+      ; // TODO: complain...
   }
 
   /////////////////////////////////
@@ -178,17 +182,6 @@ namespace Ice { namespace Script {
   {
     /*
       func_decl_stmt ::= func_decl_head block KW_END .
-
-      func_decl_head ::= TOK_IDENTIFIER TOK_COLON KW_FUNC TOK_LPAREN func_args TOK_RPAREN TOK_FUNC_ARROW type
-
-      func_args ::= func_args_list .
-      func_args ::= .
-
-      func_args_list ::= func_args_list func_arg .
-      func_args_list ::= func_arg .
-
-      func_arg ::= var_decl TOK_COMMA .
-      func_arg ::= var_decl .
     */
 
     FuncDeclHead();
@@ -197,6 +190,16 @@ namespace Ice { namespace Script {
 
   void Parser::FuncDeclHead()
   {
+    /*
+      func_decl_head ::= TOK_IDENTIFIER TOK_COLON KW_FUNC TOK_LPAREN func_args TOK_RPAREN TOK_FUNC_ARROW type
+
+      func_args ::= func_args_list .
+      func_args ::= .
+
+      func_args_list ::= func_args_list TOK_COMMA func_arg .
+      func_args_list ::= func_arg .
+    */
+
     Expect( TOK_IDENTIFIER );
     Expect( TOK_COLON );
     Expect( KW_FUNC );
@@ -204,7 +207,7 @@ namespace Ice { namespace Script {
 
     while ( !Match( TOK_RPAREN ) )
     {
-      VarDeclStmt();
+      FuncArg();
       Match( TOK_COMMA );
     }
 
@@ -215,32 +218,48 @@ namespace Ice { namespace Script {
     Type();
   }
 
+  void Parser::FuncArg()
+  {
+    /*
+      func_arg ::= TOK_IDENTIFIER TOK_COLON       type .
+      func_arg ::= TOK_IDENTIFIER TOK_COLON_COLON type .
+    */
+
+    Expect( TOK_IDENTIFIER );
+
+    if ( Match( TOK_COLON ) )
+      ;
+    else
+      Expect( TOK_COLON_COLON );
+
+    Type();
+  }
+
   /////////////////////////////////
 
   void Parser::Type()
   {
     /*
       type ::= TOK_IDENTIFIER .
-      type ::= TOK_LSQUARE LIT_INT TOK_RSQUARE type .
-      type ::= TOK_CARET TOK_IDENTIFIER .
+      type ::= TOK_IDENTIFIER TOK_LT type TOK_GT .
+      type ::= TOK_CARET type .
     */
 
-    if ( Match( TOK_IDENTIFIER ) )
-      ; // TODO: lookup type.
-    else if ( Match( TOK_LSQUARE ) )
-    {
-      Expect( LIT_INT     );
-      Expect( TOK_RSQUARE );
+    if ( Match( TOK_CARET ) )
       Type();
-    }
     else
-    {
-      Expect( TOK_CARET      );
       Expect( TOK_IDENTIFIER );
+
+    if ( Match( TOK_LT ) )
+    {
+      Type();
+      Expect( TOK_GT );
     }
   }
 
-  void Parser::FuncPtrType()
+  /////////////////////////////////
+
+  void Parser::TypeFuncPtr()
   {
     /*
       type ::= TOK_CARET KW_FUNC TOK_LPAREN type_args_list TOK_RPAREN TOK_FUNC_ARROW type .
@@ -252,13 +271,18 @@ namespace Ice { namespace Script {
       type_arg ::= type .
     */
 
+    Expect( TOK_CARET  );
     Expect( KW_FUNC    );
     Expect( TOK_LPAREN );
 
     while ( !Match( TOK_RPAREN ) )
     {
       Type();
-      Match( TOK_COMMA );
+
+      if ( Match( TOK_RPAREN ) )
+        break;
+      else
+        Expect( TOK_COMMA );
     }
 
     Expect( TOK_RPAREN );
@@ -323,14 +347,6 @@ namespace Ice { namespace Script {
       obj_stmt ::= delegate_stmt .
     */
 
-    if ( Match( TOK_DOLLAR ) )
-    {
-
-    }
-    else
-    {
-
-    }
 
   }
 
@@ -377,14 +393,14 @@ namespace Ice { namespace Script {
     Expect( TOK_COLON      );
     Expect( KW_ENUM        );
 
-    if ( Match( TOK_IDENTIFIER ) )
-      ; // TODO: do something...
     while ( !Match( KW_END ) )
     {
-      Expect( TOK_COMMA );
+      Expect( TOK_IDENTIFIER );
 
-      if ( Match( TOK_IDENTIFIER ) )
-        ; // TODO: do something...
+      if ( Match( KW_END ) )
+        break;
+      else
+        Expect( TOK_COMMA );
     }
   }
 
@@ -410,19 +426,29 @@ namespace Ice { namespace Script {
   void Parser::Stmt()
   {
     /*
+      stmt ::= anon_scope .
       stmt ::= var_assign_stmt .
+      stmt ::= const_decl_infer_stmt .
       stmt ::= var_decl_stmt .
       stmt ::= var_decl_infer_stmt .
       stmt ::= var_decl_assign_stmt .
       stmt ::= top_expr .
     */
 
-    if ( _lexer.PeekToken( 0 )->type == TOK_IDENTIFIER );
+    const Token* t = _lexer.PeekToken( 0 );
+
+    if ( t->type == KW_SCOPE )
+      AnonScope();
+
+    else if ( t->type == TOK_IDENTIFIER )
     {
       const Token* t = _lexer.PeekToken( 1 );
 
       if ( t->type == TOK_EQUAL )
         VarAssignStmt();
+
+      else if ( t->type == TOK_COLON_COLON )
+        ConstDeclInferStmt();
 
       else if ( t->type == TOK_COLON_EQUAL )
         VarDeclInferStmt();
@@ -433,18 +459,43 @@ namespace Ice { namespace Script {
       else
         TopExpr();
     }
+
+    else
+      ; // TODO: complain...
+  }
+
+  /////////////////////////////////
+
+  void Parser::AnonScope()
+  {
+    /*
+      anon_scope ::= KW_SCOPE block KW_END .
+    */
+
+    Expect( KW_SCOPE );
+
+    Block();
   }
 
   /////////////////////////////////
 
   void Parser::VarAssignStmt()
   {
+    /*
+
+    */
+  }
+
+  /////////////////////////////////
+
+  void Parser::ConstDeclInferStmt()
+  {
 
   }
 
   /////////////////////////////////
 
-  void Parser::VarDeclStmt()
+  void Parser::VarDeclInferStmt()
   {
 
   }
@@ -458,7 +509,7 @@ namespace Ice { namespace Script {
 
   /////////////////////////////////
 
-  void Parser::VarDeclInferStmt()
+  void Parser::VarDeclStmt()
   {
 
   }

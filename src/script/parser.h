@@ -24,8 +24,9 @@ namespace Ice { namespace Script {
     void TopStmt();
     void FuncDeclStmt();
     void FuncDeclHead();
+    void FuncArg();
     void Type();
-    void FuncPtrType();
+    void TypeFuncPtr();
     void InterfaceDeclStmt();
     void ClassDeclStmt();
     void ObjectDeclStmt();
@@ -33,10 +34,12 @@ namespace Ice { namespace Script {
     void EnumDeclStmt();
     void TypeDeclStmt();
     void Stmt();
+    void AnonScope();
     void VarAssignStmt();
-    void VarDeclStmt();
+    void ConstDeclInferStmt();
     void VarDeclAssignStmt();
     void VarDeclInferStmt();
+    void VarDeclStmt();
     void TopExpr();
 
     bool Match ( TokenType match_type  );

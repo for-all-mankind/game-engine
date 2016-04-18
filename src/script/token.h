@@ -26,6 +26,7 @@ namespace Ice { namespace Script {
     KW_DELEGATE,          /* delegate */
     KW_THIS,              /* this     */
     KW_END,               /* end      */
+    KW_SCOPE,             /* scope    */
     KW_STATIC,            /* static   */
 
     KW_IMPORT,            /* import    */
@@ -38,16 +39,15 @@ namespace Ice { namespace Script {
     KW_INTERFACE,         /* interface */
     KW_TYPE,              /* type      */
 
-    KW_NEW,               /* new     */
-    KW_DELETE,            /* delete  */
-    KW_OWNER,             /* owner   */
-    KW_MUTABLE,           /* mutable */
-    KW_CAST,              /* cast    */
+    KW_NEW,               /* new    */
+    KW_DELETE,            /* delete */
+    KW_OWNER,             /* owner  */
+    KW_BORROW,            /* borrow */
+    KW_CAST,              /* cast   */
 
     KW_IF,                /* if       */
     KW_ELSE,              /* else     */
     KW_FOR,               /* for      */
-    KW_IN,                /* in       */
     KW_WHILE,             /* while    */
     KW_BREAK,             /* break    */
     KW_CONTINUE,          /* continue */

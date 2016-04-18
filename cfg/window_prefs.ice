@@ -5,22 +5,11 @@ WindowMode: object
   height      :: 600;
 end
 
-Window: interface
-end
 
-Window: struct
-end
+foo: int = 10;
 
-Days: enum
-  MONDAY,
-  TUESDAY,
-  WEDNESDAY,
-  THURSDAY,
-  FRIDAY,
-  SATURDAY,
-  SUNDAY
-end
+scope
+  bar: borrow ^int = &foo;
 
-main: func() -> Int
-
+  *bar = 20;
 end

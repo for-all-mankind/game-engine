@@ -19,19 +19,20 @@ This guide will give a brief overview of the constructs in IceScript.
 
 * [Variables](#variables)
 * [Constants](#constants)
-* [Basic Types](#basic-types)
 * [Printing](#printing)
 * [Comments](#comments)
-* [Pointers](#pointers)
-* [Numeric Literals](#numeric-literals)
+* [Basic Types](#basic-types)
+* [Literals](#literals)
 * [If Statements](#if-statements)
 * [Loops](#loops)
 * [Functions](#functions)
 * [Structs](#structs)
+* [Anonymous Scopes](#anonymous-scopes)
+* [Pointers](#pointers)
 * [Enums](#enums)
 * [Classes](#classes)
 * [Objects](#objects)
-* [Interfaces](#interfaces)
+* [interfaces](#interfaces)
 * [Custom Types](#custom-types)
 
 ### Variables
@@ -39,10 +40,10 @@ This guide will give a brief overview of the constructs in IceScript.
 Just like the vast majority of programming languages IceScript uses variables to
 store modifiable values. These are written as follows:
 
-    a: Int;
+    a: int;
     a = 10;
 
-    b: Int = 10;
+    b: int = 10;
     b = 20;
 
     c := 10;
@@ -66,23 +67,10 @@ of upper or lower case letters and numbers.
 ### Constants
 
 Constants are very similar to variables except for the fact that their value
-cannot change after they are declared.
+cannot change after they are declared. They are declared with a `::`.
 
     d :: 20;
     d = 10; // Error: b already has a value.
-
-
-The type annotations are optional as long as the compiler can work out what type
-the variable or constant is.
-
-    add: func( a: Int, b: Int ) -> Int
-      return a + b;
-    end
-
-    foo := add( 1, 2 );
-
-The compiler can infer the type of `foo` by looking at the return type of the
-function `add`.
 
 [Contents](#icescript)
 
@@ -118,41 +106,44 @@ The basic types are:
 
 | Type Name | Bytes | Other Names | Range of Values                                             |
 | --------- | ----- | ----------- | ----------------------------------------------------------- |
-| Int8      | 1     |             | `-128` to `127`                                             |
-| Int16     | 2     |             | `-32,768` to `32,767`                                       |
-| Int32     | 4     | Int         | `–2,147,483,648` to `2,147,483,647`                         |
-| Int64     | 8     |             | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
-| UInt8     | 1     |             | `0` to `255`                                                |
-| UInt16    | 2     |             | `0` to `65,535`                                             |
-| UInt32    | 4     | UInt        | `0` to `4,294,967,295`                                      |
-| UInt64    | 8     |             | `0` to `18,446,744,073,709,551,615`                         |
-| Float     | 4     |             | `3.4E +/- 38`  ( 7 digits  )                                |
-| Double    | 8     |             | `1.7E +/- 308` ( 15 digits )                                |
-| Bool      | 1     |             | `true` or `false`                                           |
-| Char      | 1     |             | `-128` to `127`                                             |
-| String    | N/A   |             | N/A                                                         |
+| int8      | 1     |             | `-128` to `127`                                             |
+| int16     | 2     |             | `-32,768` to `32,767`                                       |
+| int32     | 4     | int         | `–2,147,483,648` to `2,147,483,647`                         |
+| int64     | 8     |             | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
+| uint8     | 1     |             | `0` to `255`                                                |
+| uint16    | 2     |             | `0` to `65,535`                                             |
+| uint32    | 4     | uint        | `0` to `4,294,967,295`                                      |
+| uint64    | 8     |             | `0` to `18,446,744,073,709,551,615`                         |
+| float     | 4     |             | `3.4E +/- 38`  ( 7 digits  )                                |
+| double    | 8     |             | `1.7E +/- 308` ( 15 digits )                                |
+| bool      | 1     |             | `true` or `false`                                           |
+| char      | 1     |             | `-128` to `127`                                             |
+| string    | N/A   |             | N/A                                                         |
+
+It's not super important to learn these numbers. In fact most people don't.
 
 [Contents](#icescript)
 
-### Numeric Literals
+### Literals
 
-There are seven types of numeric literal in this language. They are:
+These are all the literals in this language.
 
     int         := 42;
-    uint        := 42u;
-    float       := 3.14159f;
-    double      := 3.14159;
     hexidecimal := 0xDEADBEEF;
     octal       := 0o76543210;
     binary      := 0b10;
 
-Hexidecimal, octal and binary are all 32 bit integers.
+    uint := 42u;
 
-[Contents](#icescript)
+    float := 3.14159f;
 
-### Pointers
+    double := 3.14159;
 
-TODO: start this section.
+    bool := true;
+
+    char := 'a';
+
+    string := "Hello World";
 
 [Contents](#icescript)
 
@@ -180,12 +171,12 @@ TODO: start this section.
       print( index );
     end
 
-    active_mods :: []String{
+    active_mods :: Array<string>{
       "base_0.1.0",
       "other_0.1.0"
     };
 
-    for ( mod in active_mods )
+    for ( mod := active_mods )
       print( mod );
     end
 
@@ -214,11 +205,11 @@ TODO: start this section.
 
 ### Functions
 
-    main: func( args :: []String ) -> Int
-      print( "Hello World" );
+    print_hello: func() -> void
+      print( "Hello" );
     end
 
-    main();
+    print_hello();
 
 [Contents](#icescript)
 
@@ -239,6 +230,39 @@ TODO: start this section.
       SATURDAY,
       SUNDAY
     end
+
+[Contents](#icescript)
+
+### Anonymous Scopes
+
+TODO: start this section.
+
+[Contents](#icescript)
+
+### Pointers
+
+Pointers are a bit of a complex subject, but hopefully I'll be able to explain
+their usage in a clear enough manner that you'll be able to grasp them easily.
+
+Pointers in IceScript are similar to pointers in C, but there are a few
+differences that are worth noting. Pointers in C are just memory addresses, this
+is the same in IceScript, however IceScript doesn't just let you do what ever
+you want with them. IceScript follows the style of thinking that Rust employs.
+
+Pointers + mutations = hard to track down bugs.
+
+    foo := 10;
+    foo  = 20; // Okay, because foo is a variable and there are no borrows at the moment.
+
+    bar := &foo;
+    foo  = 10; // Error, Can't modify foo while it is being viewed.
+    *bar = 10; // Error, Can't modify the value pointed to by bar.
+
+Okay, so there are a few new
+
+This would be a pointer to an integer. This is what is known as a view. This says
+that you would like to have a pointer to see some data, but can't modify it.
+You can have as many of these at any one time as you like.
 
 [Contents](#icescript)
 
@@ -264,10 +288,10 @@ TODO: start this section.
 
 [Contents](#icescript)
 
-### Interfaces
+### interfaces
 
     Entity: interface
-      GetPosition: func() -> mut ^Vec3;
+      GetPosition: func() -> borrow ^Vec3;
     end
 
     Player: class
@@ -279,7 +303,7 @@ TODO: start this section.
         position.Z = z;
       end
 
-      GetPosition: func() -> mut ^Vec3
+      GetPosition: func() -> borrow ^Vec3
         return &position;
       end
     end
@@ -290,7 +314,7 @@ TODO: start this section.
       // ...
     end
 
-    main: func( args :: []String ) -> Int
+    main: func() -> void
       player := Player{ 1.0f, 2.0f, 3.0f };
 
       do_something_with_entity_position( &player );
@@ -300,7 +324,7 @@ TODO: start this section.
 
 ### Custom Types
 
-    ResizeCallback: type ^func( ^Window, UInt, UInt ) -> void;
+    ResizeCallback: type ^func( ^Window, uint, uint ) -> void;
 
     Window: class
       resize_callback: ResizeCallback?;
@@ -322,11 +346,11 @@ TODO: start this section.
       end
     end
 
-    on_window_resize: func( window: ^Window, width: UInt, height: UInt ) -> void
+    on_window_resize: func( window: ^Window, width: uint, height: uint ) -> void
       glViewPort( 0, 0, width, height );
     end
 
-    main: func( args :: []String ) -> Int
+    main: func() -> void
       window := Window{};
       window.SetResizeCallback( &on_window_resize );
     end
