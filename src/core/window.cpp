@@ -14,10 +14,20 @@ namespace Ice
 
   static void on_window_resize( GLFWwindow* window, i32 width, i32 height )
   {
-    glViewport( 0, 0, width, height );
+    Window::SetSize( width, height );
+
+    i32 buffer_width;
+    i32 buffer_height;
+
+    glfwGetFramebufferSize( window, &buffer_width, &buffer_height );
+
+    glViewport( 0, 0, buffer_width, buffer_height );
   }
 
   /////////////////////////////////
+
+  u32 Window::_width  = 600;
+  u32 Window::_height = 800;
 
   Window::Window( const WindowConfig&& cfg )
     : _window( nullptr )
@@ -118,8 +128,15 @@ namespace Ice
     // Register callbacks
     glfwSetKeyCallback( _window, temp_callback );
 
-    glfwSetFramebufferSizeCallback( _window, on_window_resize );
+    glfwSetWindowSizeCallback( _window, on_window_resize );
   }
 
+  void Window::SetSize( u32 width, u32 height )
+  {
+    _width  = width;
+    _height = height;
+  }
 
+  u32 Window::GetWidth () { return _width;  }
+  u32 Window::GetHeight() { return _height; }
 }

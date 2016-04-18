@@ -29,11 +29,11 @@ namespace Ice
 
     static Mat4 Translation( f32 x, f32 y, f32 z );
     static Mat4 Scale      ( f32 x, f32 y, f32 z );
-    static Mat4 Rotation   ( f32 a, f32 x, f32 y, f32 z );
+    static Mat4 Rotation   ( f32 x, f32 y, f32 z );
 
     static Mat4 Translation( const Vec3& translation );
-    static Mat4 Scale      ( const Vec3& scale );
-    static Mat4 Rotation   ( f32 angle, const Vec3& axis );
+    static Mat4 Scale      ( const Vec3& scale       );
+    static Mat4 Rotation   ( const Vec3& axis        );
 
     friend std::ostream& operator<<( std::ostream& stream, const Mat4& mat );
 

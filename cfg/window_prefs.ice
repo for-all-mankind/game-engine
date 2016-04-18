@@ -4,12 +4,3 @@ WindowMode: object
   width       :: 800;
   height      :: 600;
 end
-
-
-foo: int = 10;
-
-scope
-  bar: borrow ^int = &foo;
-
-  *bar = 20;
-end

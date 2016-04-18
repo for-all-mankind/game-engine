@@ -14,7 +14,8 @@ namespace Ice
   {
     Mat4 projection;
 
-    bool wire_frame;
+    bool wire_frame; // Tells the renderer to use wire frame or not.
+    bool has_depth;  // Determines if the context is 2D or 3D.
   };
 }
 

@@ -34,13 +34,18 @@ namespace Ice
     bool IsOpen() const;
     void Close();
 
+    static void SetSize( u32 width, u32 height );
+    static u32  GetWidth();
+    static u32  GetHeight();
+
   private:
     void CreateWindow();
 
   private:
+    static u32 _width;
+    static u32 _height;
+
     bool _fullscreen;
-    u32  _width;
-    u32  _height;
 
     std::string _title;
     GLFWwindow* _window;

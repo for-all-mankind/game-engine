@@ -93,11 +93,13 @@ namespace Ice
 
     // TODO:
     // Make these configurable inside the game.
-    _context_ui.projection = Mat4::Orthographic( -1.0f, 1.0f, -1.0f, 1.0f, 0.01f, 1000.0f );
-    _context_ui.wire_frame = false;
-
-    _context_scene.projection = Mat4::Perspective ( 70.0f, 45.0f, 0.01f, 1000.0f );
+    _context_scene.projection = Mat4::Perspective( 45.0f, cfg.width / cfg.height, 0.1f, 100.0f );
     _context_scene.wire_frame = false;
+    _context_scene.has_depth  = true;
+
+    _context_ui.projection = Mat4::Orthographic( -1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f );
+    _context_ui.wire_frame = false;
+    _context_ui.has_depth  = false;
 
     return true;
   }
@@ -143,12 +145,12 @@ namespace Ice
       _window->Update();
 
       // Update everything.
-      _ui   .Update();
       _scene.Update();
+      _ui   .Update();
 
       // Render everything.
-      _renderer->Render( _ui   , _context_ui    );
-      // _renderer->Render( _scene, _context_scene );
+      _renderer->Render( _scene, _context_scene );
+      // _renderer->Render( _ui   , _context_ui    );
 
       // Flip the buffers.
       _window->Flip();

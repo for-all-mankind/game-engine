@@ -10,11 +10,13 @@ out vec4 vertex_colour;
 out vec2 texture_coord;
 
 // Uniforms
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-  gl_Position   = transform * vec4( in_position, 1.0f );
+  gl_Position   = projection * view * model * vec4( in_position, 1.0f );
   vertex_colour = vec4( in_colour  , 1.0f );
   texture_coord = in_texture_coord;
 }

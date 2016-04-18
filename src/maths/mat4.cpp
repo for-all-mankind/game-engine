@@ -93,8 +93,8 @@ namespace Ice
     f32 q = 1.0f / tan( to_radians( 0.5f * fov ) );
     f32 a = q    / aspect;
 
-    f32 b =        ( far + near ) / ( far - near );
-    f32 c = ( 2.0f * far * near ) / ( far - near );
+    f32 b =        ( near + far ) / ( near - far );
+    f32 c = ( 2.0f * near * far ) / ( near - far );
 
     result.Elements[ 0 + 0 * MATRIX_WIDTH ] = a;
     result.Elements[ 1 + 1 * MATRIX_WIDTH ] = q;
@@ -128,26 +128,32 @@ namespace Ice
     return result;
   }
 
-  Mat4 Mat4::Rotation( f32 a, f32 x, f32 y, f32 z )
+  Mat4 Mat4::Rotation( f32 x, f32 y, f32 z )
   {
     Mat4 result( 1.0f );
 
-    f32 r = to_radians( a );
-    f32 c = cos( r );
-    f32 s = sin( r );
-    f32 o = 1.0f - c;
+    f32 rX = to_radians( x );
+    f32 rY = to_radians( y );
+    f32 rZ = to_radians( z );
 
-    result.Elements[ 0 + 0 * MATRIX_WIDTH ] = x * o + c;
-    result.Elements[ 1 + 0 * MATRIX_WIDTH ] = y * x * o + z * s;
-    result.Elements[ 2 + 0 * MATRIX_WIDTH ] = x * z * o - y * s;
+    f32 cA = cos( rX );
+    f32 sA = sin( rX );
+    f32 cB = cos( rY );
+    f32 sB = sin( rY );
+    f32 cC = cos( rZ );
+    f32 sC = sin( rZ );
 
-    result.Elements[ 0 + 1 * MATRIX_WIDTH ] = x * y * o - z * s;
-    result.Elements[ 1 + 1 * MATRIX_WIDTH ] = y * o + c;
-    result.Elements[ 2 + 1 * MATRIX_WIDTH ] = y * z * o + x * s;
+    result.Elements[ 0 + 0 * MATRIX_WIDTH ] =  cC * cB;
+    result.Elements[ 1 + 0 * MATRIX_WIDTH ] =  sC * cB;
+    result.Elements[ 2 + 0 * MATRIX_WIDTH ] = -sB;
 
-    result.Elements[ 0 + 2 * MATRIX_WIDTH ] = x * z * o + y * s;
-    result.Elements[ 1 + 2 * MATRIX_WIDTH ] = y * z * o - x * s;
-    result.Elements[ 2 + 2 * MATRIX_WIDTH ] = z * o + c;
+    result.Elements[ 0 + 1 * MATRIX_WIDTH ] = -sC * cA + cC * sB * sA;
+    result.Elements[ 1 + 1 * MATRIX_WIDTH ] =  cC * cA + sC * sB * sA;
+    result.Elements[ 2 + 1 * MATRIX_WIDTH ] =  cB * sA;
+
+    result.Elements[ 0 + 2 * MATRIX_WIDTH ] =  sC * sA + cC * sB * cA;
+    result.Elements[ 1 + 2 * MATRIX_WIDTH ] = -cC * sA + sC * sB * cA;
+    result.Elements[ 2 + 2 * MATRIX_WIDTH ] =  cB * cA;
 
     return result;
   }
@@ -162,9 +168,9 @@ namespace Ice
     return Mat4::Scale( scale.X, scale.Y, scale.Z );
   }
 
-  Mat4 Mat4::Rotation( f32 angle, const Vec3& axis )
+  Mat4 Mat4::Rotation( const Vec3& axis )
   {
-    return Mat4::Rotation( angle, axis.X, axis.Y, axis.Z );
+    return Mat4::Rotation( axis.X, axis.Y, axis.Z );
   }
 
   // Printable
