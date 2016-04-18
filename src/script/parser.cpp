@@ -421,23 +421,23 @@ namespace Ice { namespace Script {
     {
       const Token* t = _lexer.PeekToken( 1 );
 
-      if ( t->type == TOK_EQUAL );
+      if ( t->type == TOK_EQUAL )
         VarAssignStmt();
 
-      else if ( t->type == TOK_COLON_EQUAL );
+      else if ( t->type == TOK_COLON_EQUAL )
         VarDeclInferStmt();
 
-      else if ( t->type == TOK_COLON );
+      else if ( t->type == TOK_COLON )
         VarDeclAssignStmt(); // May return a 'VarDeclStmt'
 
-      else;
+      else
         TopExpr();
     }
   }
 
   /////////////////////////////////
 
-  void VarAssignStmt()
+  void Parser::VarAssignStmt()
   {
 
   }
@@ -464,6 +464,12 @@ namespace Ice { namespace Script {
   }
 
   /////////////////////////////////
+
+  void Parser::TopExpr()
+  {
+
+  }
+
   /////////////////////////////////
 
   bool Parser::Match( TokenType match_type )
