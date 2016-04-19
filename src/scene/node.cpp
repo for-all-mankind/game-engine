@@ -14,10 +14,10 @@ namespace Ice
       delete c;
   }
 
-  void Node::Update()
+  void Node::Update( f32 delta )
   {
     for ( Component* c : _components )
-      c->Update();
+      c->Update( delta );
   }
 
   void Node::Render() const

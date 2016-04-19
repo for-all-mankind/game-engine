@@ -1,8 +1,9 @@
 #ifndef ICE_NODE_H
 #define ICE_NODE_H
 
+#include "../util/types.h"
+
 #include <vector>
-#include <memory>
 
 namespace Ice
 {
@@ -18,7 +19,7 @@ namespace Ice
     Node();
     virtual ~Node();
 
-    void Update();
+    void Update( f32 delta );
     void Render() const;
 
   private:
@@ -48,7 +49,7 @@ namespace Ice
     void Hide();
     bool IsHidden() const;
 
-    void Update();
+    void Update( f32 delta );
     void Render() const;
 
   private:

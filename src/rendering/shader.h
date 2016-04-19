@@ -2,11 +2,11 @@
 #define ICE_SHADER_H
 
 #include "../util/types.h"
-#include "../maths/maths.h"
 
 #include <GL/glew.h>
 #include <string>
 #include <unordered_map>
+#include <glm/glm.hpp>
 
 namespace Ice
 {
@@ -22,10 +22,10 @@ namespace Ice
     void UpdateUniform( const GLchar* name, f32  value );
     void UpdateUniform( const GLchar* name, i32* values, i32 count );
     void UpdateUniform( const GLchar* name, f32* values, i32 count );
-    void UpdateUniform( const GLchar* name, const  Vec2& vec  );
-    void UpdateUniform( const GLchar* name, const  Vec3& vec  );
-    void UpdateUniform( const GLchar* name, const  Vec4& vec  );
-    void UpdateUniform( const GLchar* name, const  Mat4& mat  );
+    void UpdateUniform( const GLchar* name, const  glm::vec2& vec  );
+    void UpdateUniform( const GLchar* name, const  glm::vec3& vec  );
+    void UpdateUniform( const GLchar* name, const  glm::vec4& vec  );
+    void UpdateUniform( const GLchar* name, const  glm::mat4& mat  );
 
     void Bind() const;
     void UnBind() const;

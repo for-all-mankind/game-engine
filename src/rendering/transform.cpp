@@ -1,14 +1,16 @@
 #include "transform.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Ice
 {
-  const Mat4& Transform::GetTransform()
+  const glm::mat4& Transform::GetTransform()
   {
     if ( _has_changed )
     {
-      _model = Mat4::Translation( _translation )
-             * Mat4::Rotation   ( _rotation    )
-             * Mat4::Scale      ( _scale       );
+      _model = glm::translate( glm::mat4( 1.0f ), _translation      )
+             * glm::rotate   ( glm::mat4( 1.0f ), _angle, _rotation )
+             * glm::scale    ( glm::mat4( 1.0f ), _scale            );
 
       _has_changed = false;
     }
@@ -16,30 +18,29 @@ namespace Ice
     return _model;
   }
 
-  // Mat4 Transform::GetProjected( const Mat4& projection )
-  // {
-  //   return GetTransform() * projection;
-  // }
-
-  void Transform::SetTranslation( const Vec3& vec )
+  void Transform::SetTranslation( const glm::vec3& vec )
   {
     _has_changed = true;
     _translation = vec;
   }
 
-  void Transform::SetRotation( const Vec3& vec )
-  {
-    _has_changed = true;
-    _rotation    = vec;
-  }
-
-  void Transform::SetScale( const Vec3& vec )
+  void Transform::SetScale( const glm::vec3& vec )
   {
     _has_changed = true;
     _scale       = vec;
   }
 
-  Vec3 Transform::GetTranslation() const { return _translation; }
-  Vec3 Transform::GetRotation   () const { return _rotation;    }
-  Vec3 Transform::GetScale      () const { return _scale;       }
+  void Transform::SetRotation( f32 angle, const glm::vec3& axis )
+  {
+    _has_changed = true;
+
+    _angle    = angle;
+    _rotation = axis;
+  }
+
+  glm::vec3 Transform::GetTranslation() const { return _translation; }
+  glm::vec3 Transform::GetScale      () const { return _scale;       }
+
+  glm::vec3 Transform::GetRotationAxis () const { return _rotation; }
+  f32       Transform::GetRotationAngle() const { return _angle;    }
 }

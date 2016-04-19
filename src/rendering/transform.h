@@ -1,7 +1,10 @@
 #ifndef ICE_TRANSFORM_H
 #define ICE_TRANSFORM_H
 
-#include "../maths/maths.h"
+#include "../maths/defines.h"
+#include "../util/types.h"
+
+#include <glm/glm.hpp>
 
 namespace Ice
 {
@@ -9,29 +12,35 @@ namespace Ice
   {
   public:
     Transform()
-      : _has_changed( true       )
-      , _translation( Vec3::Zero )
-      , _rotation   ( Vec3::Zero )
-      , _scale      ( Vec3::One  )
+      : _has_changed( true      )
+      , _translation( Vec3_Zero )
+      , _scale      ( Vec3_One  )
+      , _rotation   ( Vec3_Zero )
+      , _angle      ( 0.0f      )
     {}
 
-    const Mat4& GetTransform();
+    const glm::mat4& GetTransform();
 
-    void SetTranslation( const Vec3& vec );
-    void SetRotation   ( const Vec3& vec );
-    void SetScale      ( const Vec3& vec );
+    void SetTranslation( const glm::vec3& vec );
+    void SetScale      ( const glm::vec3& vec );
 
-    Vec3 GetTranslation() const;
-    Vec3 GetRotation   () const;
-    Vec3 GetScale      () const;
+    void SetRotation( f32 angle, const glm::vec3& axis );
+
+    glm::vec3 GetTranslation() const;
+    glm::vec3 GetScale      () const;
+
+    glm::vec3 GetRotationAxis () const;
+    f32  GetRotationAngle() const;
 
   private:
     bool _has_changed;
-    Mat4 _model;
+    glm::mat4 _model;
 
-    Vec3 _translation;
-    Vec3 _rotation;
-    Vec3 _scale;
+    glm::vec3 _translation;
+    glm::vec3 _scale;
+
+    glm::vec3 _rotation;
+    f32  _angle;
   };
 }
 

@@ -4,69 +4,65 @@
 #include "../util/types.h"
 
 #include <GLFW/glfw3.h>
-
-#include <unordered_map>
 #include <vector>
 
 namespace Ice
 {
-  // Callback functions for
-  // hooking into glfw.
-  void key_callback( GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods );
+  // Callback functions for hooking into glfw.
+  void cursor_input( GLFWwindow* window, f64 xpos, f64 ypos );
+  void cursor_enter( GLFWwindow* window, i32 entered );
+  void button_input( GLFWwindow* window, i32 button, i32 action, i32 mods );
+  void scroll_input( GLFWwindow* window, f64 xoffset, f64 yoffset );
+  void key_input   ( GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods );
+  void text_input  ( GLFWwindow* window, u32 codepoint, i32 mods );
+  void path_drop   ( GLFWwindow* window, i32 count, const char** paths );
+
+  // glfwGetClipboardString();
+  // glfwSetClipboardString();
 
   /////////////////////////////////
 
-  typedef void (*ContextCallback)();
+  const i32 MAX_KEYS    = 1024;
+  const i32 MAX_BUTTONS = 32;
 
   /////////////////////////////////
 
-  class InputContext
+  class Input
   {
   public:
-    InputContext();
-    ~InputContext();
+    static Input* GetInstance();
+    static void          Free();
 
-    void Register( i32 key, i32 mods, ContextCallback function );
-    void Call    ( i32 key, i32 mods );
+    void Update();
 
-  private:
-    std::unordered_map<u64, ContextCallback> _functions;
-  };
+    bool KeyPressed ( i32 key ) const;
+    bool KeyReleased( i32 key ) const;
+    bool KeyHeld    ( i32 key ) const;
 
-  /////////////////////////////////
+    bool ButtonPressed ( i32 button ) const;
+    bool ButtonReleased( i32 button ) const;
+    bool ButtonHeld    ( i32 button ) const;
 
-  class InputController
-  {
-  public:
-    static InputController* GetInstance();
-    static void             Free();
+    void GetMousePosition( i32* x, i32* y ) const;
 
-    // Create a new context and adds it to the list.
-    u32 NewContext();
-
-    InputContext* GetContext( u32 uid );
-    InputContext* GetCurrent();
-    InputContext* GetGlobal ();
+    void SetKey   ( i32 key   , bool set );
+    void SetButton( i32 button, bool set );
 
   private:
-    InputController();
-    ~InputController();
+    Input();
 
     // No copying or moving of the input class.
-    InputController( const InputController&  copy ) = delete;
-    InputController(       InputController&& move ) = delete;
+    Input( const Input&  copy ) = delete;
+    Input(       Input&& move ) = delete;
 
     // No copy or move assignment of the input class.
-    InputController& operator=( const InputController&  copy ) = delete;
-    InputController& operator=(       InputController&& move ) = delete;
+    Input& operator=( const Input&  copy ) = delete;
+    Input& operator=(       Input&& move ) = delete;
 
   private:
-    static InputController* _instance;
+    // bool
 
-    InputContext* _global;
-    InputContext* _current;
-
-    std::vector<InputContext*> _registered_contexts;
+    static Input* _instance;
   };
 }
 

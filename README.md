@@ -9,6 +9,7 @@ The libraries that this engine uses are:
 * [GLEW](http://glew.sourceforge.net/)
 * [YSE](http://attr-x.net/yse/)
 * [Newton Dynamics](http://newtondynamics.com/forum/newton.php)
+* [GLM](http://glm.g-truc.net/0.9.7/index.html)
 
 ## IceScript
 
@@ -268,13 +269,13 @@ You can have as many of these at any one time as you like.
 
 ### Classes
 
-    Vec3: class
+    glm::vec3: class
       X := 0.0f;
       Y := 0.0f;
       Z := 0.0f;
 
-      Cross: func( other: ^Vec3 ) -> Vec3
-        return Vec3{ Y * other.Z - Z * other.Y,
+      Cross: func( other: ^glm::vec3 ) -> glm::vec3
+        return glm::vec3{ Y * other.Z - Z * other.Y,
                      Z * other.X - X * other.Z,
                      X * other.Y - Y * other.X };
       end
@@ -291,11 +292,11 @@ TODO: start this section.
 ### interfaces
 
     Entity: interface
-      GetPosition: func() -> borrow ^Vec3;
+      GetPosition: func() -> borrow ^glm::vec3;
     end
 
     Player: class
-      position: Vec3;
+      position: glm::vec3;
 
       this: func( x: float, y: float, z: float )
         position.X = x;
@@ -303,7 +304,7 @@ TODO: start this section.
         position.Z = z;
       end
 
-      GetPosition: func() -> borrow ^Vec3
+      GetPosition: func() -> borrow ^glm::vec3
         return &position;
       end
     end

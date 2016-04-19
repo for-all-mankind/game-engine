@@ -1,6 +1,11 @@
 #include "renderer.h"
 
 #include "../core/window.h"
+#include "vertex.h"
+
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Ice
 {
@@ -22,18 +27,18 @@ namespace Ice
     _shader->RegisterUniform( "view"       );
     _shader->RegisterUniform( "projection" );
 
-    _view = Mat4::Translation( Vec3{ 0.0f, 0.0f, -5.0f } );
+    _view = glm::translate( _view, glm::vec3( 0.0f, 0.0f, -5.0f ) );
 
-    GLfloat vertices[] = {
-    // Positions          /**/ Colours           /**/ Texture Coordinates
-       0.5f,  0.5f,  0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 1.0f, 1.0f, // Front Top Right
-       0.5f, -0.5f,  0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 1.0f, 0.0f, // Front Bottom Right
-      -0.5f, -0.5f,  0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 0.0f, 0.0f, // Front Bottom Left
-      -0.5f,  0.5f,  0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 0.0f, 1.0f, // Front Top Left
-       0.5f,  0.5f, -0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 1.0f, 1.0f, // Back Top Right
-       0.5f, -0.5f, -0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 1.0f, 0.0f, // Back Bottom Right
-      -0.5f, -0.5f, -0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 0.0f, 0.0f, // Back Bottom Left
-      -0.5f,  0.5f, -0.5f, /**/ 1.0f, 1.0f, 1.0f, /**/ 0.0f, 1.0f, // Back Top Left
+    Vertex vertices[] = {
+    //        Positions                    Colours                   Texture Coordinates
+      Vertex{ glm::vec3{  0.5f,  0.5f,  0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 1.0f, 1.0f } }, // Front Top Right
+      Vertex{ glm::vec3{  0.5f, -0.5f,  0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 1.0f, 0.0f } }, // Front Bottom Right
+      Vertex{ glm::vec3{ -0.5f, -0.5f,  0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 0.0f, 0.0f } }, // Front Bottom Left
+      Vertex{ glm::vec3{ -0.5f,  0.5f,  0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 0.0f, 1.0f } }, // Front Top Left
+      Vertex{ glm::vec3{  0.5f,  0.5f, -0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 1.0f, 1.0f } }, // Back Top Right
+      Vertex{ glm::vec3{  0.5f, -0.5f, -0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 1.0f, 0.0f } }, // Back Bottom Right
+      Vertex{ glm::vec3{ -0.5f, -0.5f, -0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 0.0f, 0.0f } }, // Back Bottom Left
+      Vertex{ glm::vec3{ -0.5f,  0.5f, -0.5f }, glm::vec3{ 1.0f, 1.0f, 1.0f }, glm::vec2{ 0.0f, 1.0f } }, // Back Top Left
     };
 
     GLuint indices[] = {
@@ -64,9 +69,9 @@ namespace Ice
     _vao.EBO().Bind();
     _vao.EBO().BufferData( sizeof( indices  ), indices , GL_STATIC_DRAW );
 
-    _vao.SetVAP( 0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), (GLvoid*)( 0 * sizeof( GLfloat ) ) );
-    _vao.SetVAP( 1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), (GLvoid*)( 3 * sizeof( GLfloat ) ) );
-    _vao.SetVAP( 2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof( GLfloat ), (GLvoid*)( 6 * sizeof( GLfloat ) ) );
+    _vao.SetVAP( 0, VERTEX_SIZE_POSITION , GL_FLOAT, GL_FALSE, VERTEX_SIZE, VERTEX_OFFSET_POSITION  );
+    _vao.SetVAP( 1, VERTEX_SIZE_COLOUR   , GL_FLOAT, GL_FALSE, VERTEX_SIZE, VERTEX_OFFSET_COLOUR    );
+    _vao.SetVAP( 2, VERTEX_SIZE_TEX_COORD, GL_FLOAT, GL_FALSE, VERTEX_SIZE, VERTEX_OFFSET_TEX_COORD );
     _vao.UnBind();
   }
 
@@ -78,7 +83,7 @@ namespace Ice
 
   #include <GLFW/glfw3.h>
 
-  void Renderer::Render( const NodeRef& node, const RenderContext& context )
+  void Renderer::Render( const NodeRef& node, const RenderContext& context, Camera* camera )
   {
     context.wire_frame
       ? glPolygonMode( GL_FRONT_AND_BACK, GL_LINE )
@@ -89,9 +94,22 @@ namespace Ice
       : glDisable( GL_DEPTH_TEST );
 
     f32 time  = static_cast<f32>( glfwGetTime() );
-    f32 angle = time * 20.0f;
+    f32 angle = time;
 
-    _t.SetRotation( Vec3{ angle, angle, 0.0f } );
+    // if ( camera != nullptr )
+    // {
+    //   camera->Move( Vec3_UnitX, -time / 100.0f );
+    //   camera->Rotate( 0.0f, -time / 100.0f );
+
+    //   glm::vec3 position = camera->Position();
+    //   glm::vec3 up       = camera->Up();
+    //   glm::vec3 forward  = camera->Forward();
+
+    //   _view = glm::lookAt( position, position + forward, up );
+    // }
+    // else
+
+    _t.SetRotation( angle, glm::vec3{ 1.0f, 1.0f, 0.0f } );
 
     _shader->Bind();
     _shader->UpdateUniform( "model"     , _t.GetTransform()  );

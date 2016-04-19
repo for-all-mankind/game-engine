@@ -1,17 +1,10 @@
 #include "window.h"
+#include "../input/input.h"
 
 #include <iostream>
 
 namespace Ice
 {
-  static void temp_callback( GLFWwindow* window, i32 key, i32 scancode, i32 action, i32 mods )
-  {
-    if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-      glfwSetWindowShouldClose( window, GL_TRUE );
-  }
-
-  /////////////////////////////////
-
   static void on_window_resize( GLFWwindow* window, i32 width, i32 height )
   {
     Window::SetSize( width, height );
@@ -126,7 +119,12 @@ namespace Ice
     glfwMakeContextCurrent( _window );
 
     // Register callbacks
-    glfwSetKeyCallback( _window, temp_callback );
+    glfwSetCursorPosCallback  ( _window, cursor_input );
+    glfwSetCursorEnterCallback( _window, cursor_enter );
+    glfwSetMouseButtonCallback( _window, button_input );
+    glfwSetScrollCallback     ( _window, scroll_input );
+    glfwSetKeyCallback        ( _window, key_input    );
+    glfwSetCharModsCallback   ( _window, text_input   );
 
     glfwSetWindowSizeCallback( _window, on_window_resize );
   }

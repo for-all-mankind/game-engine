@@ -3,7 +3,7 @@ SRC := $(shell find src/ -name *.cpp)
 OBJ := $(SRC:src/%.cpp=bin/%.o)
 
 CFLAGS := -Wall -std=c++14
-LFLAGS := -lGL -lGLEW -lglfw
+LFLAGS := -lGL -lGLEW -lm -lglfw
 
 OUT := IceEngine
 

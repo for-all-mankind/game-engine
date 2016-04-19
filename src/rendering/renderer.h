@@ -2,13 +2,17 @@
 #define ICE_RENDERER_H
 
 #include "../scene/node.h"
-#include "../maths/maths.h"
-#include "buffers/buffers.h"
+#include "../core/camera.h"
 #include "render_context.h"
+
+// temp
+#include "buffers/buffers.h"
 #include "shader.h"
 #include "texture.h"
 #include "transform.h"
+
 #include <GL/glew.h>
+#include <glm/mat4x4.hpp>
 
 namespace Ice
 {
@@ -18,16 +22,16 @@ namespace Ice
     Renderer();
     ~Renderer();
 
-    void Render( const NodeRef& node, const RenderContext& context );
-
+    void Render( const NodeRef& node, const RenderContext& context, Camera* camera );
     void Clear();
 
   private:
+    Shader* _shader;
+    glm::mat4    _view;
+
+
+    // Temp
     Texture* _texture;
-    Shader*  _shader;
-
-    Mat4 _view;
-
     GLvao _vao;
     Transform _t;
   };

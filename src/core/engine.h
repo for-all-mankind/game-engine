@@ -2,6 +2,7 @@
 #define ICE_ENGINE_H
 
 #include "window.h"
+#include "camera.h"
 #include "../scene/node.h"
 #include "../rendering/render_context.h"
 #include "../rendering/renderer.h"
@@ -27,6 +28,8 @@ namespace Ice
   private:
     Window*   _window;
     Renderer* _renderer;
+    Camera    _camera_debug;
+    Camera*   _camera_current;
 
     RenderContext _context_ui;
     RenderContext _context_scene;

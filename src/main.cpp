@@ -1,7 +1,7 @@
 #include "util/types.h"
 #include "core/engine.h"
 
-i32 main( i32 argc, char* argv[] )
+i32 main( i32 argc, char const* argv[] )
 {
   Ice::Engine engine;
 

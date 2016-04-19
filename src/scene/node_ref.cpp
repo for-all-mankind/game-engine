@@ -52,13 +52,13 @@ namespace Ice
     return _is_hidden;
   }
 
-  void NodeRef::Update()
+  void NodeRef::Update( f32 delta )
   {
     if ( _node != nullptr )
-      _node->Update();
+      _node->Update( delta );
 
     for ( NodeRef* n : _children )
-      n->Update();
+      n->Update( delta );
   }
 
   void NodeRef::Render() const

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Ice
 {
@@ -50,24 +51,24 @@ namespace Ice
     glUniform1fv( GetUniformLocation( name ), count, values );
   }
 
-  void Shader::UpdateUniform( const GLchar* name, const Vec2& vec )
+  void Shader::UpdateUniform( const GLchar* name, const glm::vec2& vec )
   {
-    glUniform2f( GetUniformLocation( name ), vec.X, vec.Y );
+    glUniform2f( GetUniformLocation( name ), vec.x, vec.y );
   }
 
-  void Shader::UpdateUniform( const GLchar* name, const Vec3& vec )
+  void Shader::UpdateUniform( const GLchar* name, const glm::vec3& vec )
   {
-    glUniform3f( GetUniformLocation( name ), vec.X, vec.Y, vec.Z );
+    glUniform3f( GetUniformLocation( name ), vec.x, vec.y, vec.z );
   }
 
-  void Shader::UpdateUniform( const GLchar* name, const Vec4& vec )
+  void Shader::UpdateUniform( const GLchar* name, const glm::vec4& vec )
   {
-    glUniform4f( GetUniformLocation( name ), vec.X, vec.Y, vec.Z, vec.W );
+    glUniform4f( GetUniformLocation( name ), vec.x, vec.y, vec.z, vec.w );
   }
 
-  void Shader::UpdateUniform( const GLchar* name, const Mat4& mat )
+  void Shader::UpdateUniform( const GLchar* name, const glm::mat4& mat )
   {
-    glUniformMatrix4fv( GetUniformLocation( name ), 1, GL_FALSE, mat.Elements );
+    glUniformMatrix4fv( GetUniformLocation( name ), 1, GL_FALSE, glm::value_ptr( mat ) );
   }
 
   GLint Shader::GetUniformLocation( const GLchar* name )

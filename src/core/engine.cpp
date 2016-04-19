@@ -1,9 +1,11 @@
 #include "engine.h"
-// #include "../script/pnl.h"
+// #include "../script/ice.h"
 #include "../util/file.h"
+#include "../input/input.h"
 
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Ice
 {
@@ -57,6 +59,9 @@ namespace Ice
     // Close down the sound system.
     // YSE::System().close();
 
+    // Clean up the input system.
+    Input::Free();
+
     glfwTerminate();
   }
 
@@ -91,13 +96,18 @@ namespace Ice
     _window   = new Window{ std::move( cfg ) };
     _renderer = new Renderer{};
 
+    _camera_current = &_camera_debug;
+
     // TODO:
     // Make these configurable inside the game.
-    _context_scene.projection = Mat4::Perspective( 45.0f, cfg.width / cfg.height, 0.1f, 100.0f );
+    f32 aspect_ratio  = static_cast<f32>( cfg.width  )
+                      / static_cast<f32>( cfg.height );
+
+    _context_scene.projection = glm::perspective( 45.0f, aspect_ratio, 0.1f, 100.0f );
     _context_scene.wire_frame = false;
     _context_scene.has_depth  = true;
 
-    _context_ui.projection = Mat4::Orthographic( -1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f );
+    _context_ui.projection = glm::ortho( -1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 100.0f );
     _context_ui.wire_frame = false;
     _context_ui.has_depth  = false;
 
@@ -137,20 +147,39 @@ namespace Ice
       return;
     }
 
+    // The renderer isn't initialised, so we must stop.
+    if ( _renderer == nullptr )
+    {
+      std::cout << "The renderer is not initialised." << std::endl;
+      return;
+    }
+
+    // Calculate delta time.
+    f32 time_current = 0.0f;
+    f32 time_last    = 0.0f;
+    f32 time_delta   = 0.0f;
+
     while ( _window->IsOpen() )
     {
       // Clear the screen
       _renderer->Clear();
 
+      time_current = glfwGetTime();
+      time_delta   = time_current - time_last;
+      time_last    = time_current;
+
       _window->Update();
 
+      // Update the key states
+      Input::GetInstance()->Update();
+
       // Update everything.
-      _scene.Update();
-      _ui   .Update();
+      _scene.Update( time_delta );
+      _ui   .Update( time_delta );
 
       // Render everything.
-      _renderer->Render( _scene, _context_scene );
-      // _renderer->Render( _ui   , _context_ui    );
+      _renderer->Render( _scene, _context_scene, _camera_current );
+      // _renderer->Render( _ui   , _context_ui   , _camera_current );
 
       // Flip the buffers.
       _window->Flip();
