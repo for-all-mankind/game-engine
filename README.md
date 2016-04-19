@@ -105,21 +105,21 @@ how a program can define it's own types.
 
 The basic types are:
 
-| Type Name | Bytes | Other Names | Range of Values                                             |
-| --------- | ----- | ----------- | ----------------------------------------------------------- |
-| int8      | 1     |             | `-128` to `127`                                             |
-| int16     | 2     |             | `-32,768` to `32,767`                                       |
-| int32     | 4     | int         | `–2,147,483,648` to `2,147,483,647`                         |
-| int64     | 8     |             | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
-| uint8     | 1     |             | `0` to `255`                                                |
-| uint16    | 2     |             | `0` to `65,535`                                             |
-| uint32    | 4     | uint        | `0` to `4,294,967,295`                                      |
-| uint64    | 8     |             | `0` to `18,446,744,073,709,551,615`                         |
-| float     | 4     |             | `3.4E +/- 38`  ( 7 digits  )                                |
-| double    | 8     |             | `1.7E +/- 308` ( 15 digits )                                |
-| bool      | 1     |             | `true` or `false`                                           |
-| char      | 1     |             | `-128` to `127`                                             |
-| string    | N/A   |             | N/A                                                         |
+| Type Name | Bytes | Range of Values                                             |
+| --------- | ----- | ----------------------------------------------------------- |
+| byte      | 1     | `-128` to `127`                                             |
+| short     | 2     | `-32,768` to `32,767`                                       |
+| int       | 4     | `–2,147,483,648` to `2,147,483,647`                         |
+| long      | 8     | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
+| ubyte     | 1     | `0` to `255`                                                |
+| ushort    | 2     | `0` to `65,535`                                             |
+| uint      | 4     | `0` to `4,294,967,295`                                      |
+| ulong     | 8     | `0` to `18,446,744,073,709,551,615`                         |
+| float     | 4     | `3.4E +/- 38`  ( 7 digits  )                                |
+| double    | 8     | `1.7E +/- 308` ( 15 digits )                                |
+| bool      | 1     | `true` or `false`                                           |
+| char      | 1     | `-128` to `127`                                             |
+| string    | N/A   | N/A                                                         |
 
 It's not super important to learn these numbers. In fact most people don't.
 
@@ -136,7 +136,7 @@ These are all the literals in this language.
 
     uint := 42u;
 
-    float := 3.14159f;
+    Float := 3.14159f;
 
     double := 3.14159;
 
@@ -298,7 +298,7 @@ TODO: start this section.
     Player: class
       position: glm::vec3;
 
-      this: func( x: float, y: float, z: float )
+      this: func( x: Float, y: Float, z: Float )
         position.X = x;
         position.Y = y;
         position.Z = z;
@@ -330,8 +330,8 @@ TODO: start this section.
     Window: class
       resize_callback: ResizeCallback?;
 
-      width : Uint;
-      height: Uint;
+      width : uint;
+      height: uint;
 
       this: func()
         resize_callback = null;

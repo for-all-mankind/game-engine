@@ -1,3 +1,3 @@
-active_mods :: StaticArray<String>{
+active_mods :: StaticArray<std::string>{
   "base_0.1.0"
 };
