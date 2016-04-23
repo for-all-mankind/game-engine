@@ -1,5 +1,5 @@
-#ifndef ICE_NON_COPY_H
-#define ICE_NON_COPY_H
+#ifndef ICE_COMMON_NON_COPY_H
+#define ICE_COMMON_NON_COPY_H
 
 #include <Ice/Common/Types.hpp>
 
@@ -20,4 +20,4 @@ namespace Ice { namespace Common {
 
 } }
 
-#endif // ICE_NON_COPY_H
+#endif // ICE_COMMON_NON_COPY_H

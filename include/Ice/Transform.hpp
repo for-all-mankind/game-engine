@@ -2,7 +2,7 @@
 #define ICE_TRANSFORM_H
 
 #include <Ice/Common/Types.hpp>
-#include <Ice/Maths.hpp>
+#include <Ice/Maths/Maths.hpp>
 
 namespace Ice
 {
@@ -10,35 +10,30 @@ namespace Ice
   {
   public:
     Transform()
-      : _has_changed( true      )
-      , _translation( Vec3_Zero )
-      , _scale      ( Vec3_One  )
-      , _rotation   ( Vec3_Zero )
-      , _angle      ( 0.0f      )
+      : _has_changed( true     )
+      , _scale      ( Vec3_One )
     {}
 
-    const glm::mat4& GetTransform();
+    const Mat4& GetTransform();
 
-    void SetTranslation( const glm::vec3& vec );
-    void SetScale      ( const glm::vec3& vec );
+    void SetTranslation( const Vec3& vec );
+    void SetScale      ( const Vec3& vec );
 
-    void SetRotation( f32 angle, const glm::vec3& axis );
+    void SetRotation( const Quaternion& quat );
 
-    glm::vec3 GetTranslation() const;
-    glm::vec3 GetScale      () const;
+    Vec3 GetTranslation() const;
+    Vec3 GetScale      () const;
 
-    glm::vec3 GetRotationAxis () const;
-    f32  GetRotationAngle() const;
+    Quaternion GetRotation() const;
 
   private:
-    bool   _has_changed;
-    glm::mat4 _model;
+    bool _has_changed;
+    Mat4 _model;
 
-    glm::vec3 _translation;
-    glm::vec3 _scale;
+    Vec3 _translation;
+    Vec3 _scale;
 
-    glm::vec3 _rotation;
-    f32  _angle;
+    Quaternion _rotation;
   };
 }
 

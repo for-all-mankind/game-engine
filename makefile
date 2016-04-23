@@ -1,18 +1,18 @@
-CC  := g++
+CC  := clang++
 SRC := $(shell find src/ -name *.cpp)
-OBJ := $(SRC:src/%.cpp=bin/%.o)
+OBJ := $(SRC:src/%.cpp=obj/%.o)
 
 CFLAGS := -Wall -std=c++14 -I./include/
-LFLAGS := -lGL -lGLEW -lm -lglfw
+LFLAGS := -lGL -lGLEW -lglfw
 
 OUT := IceEngine
 
 all: $(OBJ)
 	$(CC) $^ $(LFLAGS) -o $(OUT)
 
-bin/%.o: src/%.cpp
+obj/%.o: src/%.cpp
 	mkdir -p $(dir $@)
 	$(CC) -c -g $(CFLAGS) $^ -o $@
 
 clean:
-	rm -rf bin/ $(OUT)
+	rm -rf obj/ $(OUT)

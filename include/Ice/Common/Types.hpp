@@ -1,5 +1,5 @@
-#ifndef ICE_TYPES_H
-#define ICE_TYPES_H
+#ifndef ICE_COMMON_TYPES_H
+#define ICE_COMMON_TYPES_H
 
 #include <cstdint>
 #include <string>
@@ -14,5 +14,9 @@ using u32 = std::uint32_t;
 using u64 = std::uint64_t;
 using f32 = float;
 using f64 = double;
+using b8  = bool;
+using b32 = i32;
 
-#endif // ICE_TYPES_H
+using usize = std::size_t;
+
+#endif // ICE_COMMON_TYPES_H

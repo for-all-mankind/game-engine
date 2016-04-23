@@ -1,5 +1,5 @@
-#ifndef INDIE_CIV_ENGINE_FILE_H
-#define INDIE_CIV_ENGINE_FILE_H
+#ifndef ICE_COMMON_FILE_H
+#define ICE_COMMON_FILE_H
 
 #include <Ice/Common/Types.hpp>
 
@@ -10,4 +10,4 @@ namespace Ice { namespace Common {
 
 } }
 
-#endif // INDIE_CIV_ENGINE_FILE_H
+#endif // ICE_COMMON_FILE_H

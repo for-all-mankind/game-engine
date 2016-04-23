@@ -9,7 +9,6 @@ The libraries that this engine uses are:
 * [GLEW](http://glew.sourceforge.net/)
 * [YSE](http://attr-x.net/yse/)
 * [Newton Dynamics](http://newtondynamics.com/forum/newton.php)
-* [GLM](http://glm.g-truc.net/0.9.7/index.html)
 
 ## IceScript
 
