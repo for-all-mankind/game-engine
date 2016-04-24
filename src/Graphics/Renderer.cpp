@@ -14,8 +14,6 @@ namespace Ice
     // glFrontFace( GL_CW    );
     // glCullFace ( GL_FRONT );
 
-    _texture = load_texture( "data/test/box.jpg" );
-
     _shader  = new Shader( "data/shaders/basic.vert",
                            "data/shaders/basic.frag" );
 
@@ -23,31 +21,22 @@ namespace Ice
     _shader->RegisterUniform( "view"       );
     _shader->RegisterUniform( "projection" );
 
-    Vertex vertices[] = {
-    //  Positions                Colours       Texture Coordinates
-      { { +0.5f, +0.5f, +0.0f }, Colour_White, { 1.0f, 0.0f } },
-      { { +0.5f, -0.5f, +0.0f }, Colour_Red  , { 1.0f, 1.0f } },
-      { { -0.5f, -0.5f, +0.0f }, Colour_Green, { 0.0f, 1.0f } },
-      { { -0.5f, +0.5f, +0.0f }, Colour_Blue , { 0.0f, 0.0f } },
+    std::vector<Vertex> vertices = {
+    //  Positions                Normals               Colours       Texture Coordinates
+      { { +0.5f, +0.5f, +0.0f }, { 0.0f, 0.0f, 1.0f }, Colour_White, { 1.0f, 0.0f } },
+      { { +0.5f, -0.5f, +0.0f }, { 0.0f, 0.0f, 1.0f }, Colour_Red  , { 1.0f, 1.0f } },
+      { { -0.5f, -0.5f, +0.0f }, { 0.0f, 0.0f, 1.0f }, Colour_Green, { 0.0f, 1.0f } },
+      { { -0.5f, +0.5f, +0.0f }, { 0.0f, 0.0f, 1.0f }, Colour_Blue , { 0.0f, 0.0f } },
     };
 
-    GLuint indices[] = {
+    std::vector<GLuint> indices = {
       0, 1, 3,
       3, 1, 2
     };
 
-    _cube_vao.Bind();
+    std::vector<Texture> textures = { load_texture( "data/test/box.jpg", TextureType::Diffuse ) };
 
-    _cube_vao.VBO().Bind();
-    _cube_vao.VBO().BufferData( sizeof( vertices ), vertices, GL_STATIC_DRAW );
-
-    _cube_vao.EBO().Bind();
-    _cube_vao.EBO().BufferData( sizeof( indices ), indices , GL_STATIC_DRAW );
-
-    _cube_vao.SetVAP( 0, V_COMPONENTS_P, V_TYPE_P, V_NORMALISE_P, VERTEX_SIZE, V_OFFSET_P );
-    _cube_vao.SetVAP( 1, V_COMPONENTS_C, V_TYPE_C, V_NORMALISE_C, VERTEX_SIZE, V_OFFSET_C );
-    _cube_vao.SetVAP( 2, V_COMPONENTS_T, V_TYPE_T, V_NORMALISE_T, VERTEX_SIZE, V_OFFSET_T );
-    _cube_vao.UnBind();
+    _cube_mesh.AddData( vertices, indices, textures );
 
     _cube.SetTranslation( { 0.0f, 0.0f, 0.0f } );
     _cube.SetScale      ( { 1.0f, 1.0f, 1.0f } );
@@ -85,11 +74,7 @@ namespace Ice
     _shader->UpdateUniform( "view"      , _view                );
     _shader->UpdateUniform( "projection", context.projection   );
 
-    bind_texture( &_texture, 0 );
-
-    _cube_vao.Bind();
-    glDrawElements( GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0 );
-    _cube_vao.UnBind();
+    _cube_mesh.Draw( *_shader );
   }
 
   void Renderer::Clear()

@@ -17,7 +17,7 @@ namespace Ice
   class Mesh
   {
   public:
-    Mesh( std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures );
+    void AddData( std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures );
     void Draw( Shader& shader );
 
   private:

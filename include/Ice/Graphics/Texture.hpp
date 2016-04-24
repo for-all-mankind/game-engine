@@ -62,11 +62,14 @@ namespace Ice
 
   /////////////////////////////////
 
-  Texture load_texture( const Image& image,
+  Texture load_texture( const Image&    image,
+                        TextureType     type,
                         TextureFilter   min_filter = TextureFilter::LinearMipmapLinear,
                         TextureFilter   mag_filter = TextureFilter::Linear,
                         TextureWrapMode wrap_mode  = TextureWrapMode::Repeat );
-  Texture load_texture( const char* filename,
+
+  Texture load_texture( const char*     filename,
+                        TextureType     type,
                         TextureFilter   min_filter = TextureFilter::LinearMipmapLinear,
                         TextureFilter   mag_filter = TextureFilter::Linear,
                         TextureWrapMode wrap_mode  = TextureWrapMode::Repeat );

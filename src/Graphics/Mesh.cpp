@@ -2,7 +2,7 @@
 
 namespace Ice
 {
-  Mesh::Mesh( std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures )
+  void Mesh::AddData( std::vector<Vertex> vertices, std::vector<GLuint> indices, std::vector<Texture> textures )
   {
     _vertices = std::move( vertices );
     _indices  = std::move( indices  );

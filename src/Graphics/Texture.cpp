@@ -33,7 +33,8 @@ namespace Ice
 
   /////////////////////////////////
 
-  Texture load_texture( const Image& image,
+  Texture load_texture( const Image&  image,
+                        TextureType   type,
                         TextureFilter min_filter,
                         TextureFilter mag_filter,
                         TextureWrapMode wrap_mode )
@@ -41,7 +42,7 @@ namespace Ice
     if ( image.format == ImageFormat::None )
       throw std::runtime_error( "Invalid image format" );
 
-    Texture texture{ 0, image.width, image.height };
+    Texture texture{ 0, image.width, image.height, type };
 
     glGenTextures( 1, &texture.handle );
     glBindTexture( GL_TEXTURE_2D, texture.handle );
@@ -67,7 +68,8 @@ namespace Ice
     return texture;
   }
 
-  Texture load_texture( const char* filename,
+  Texture load_texture( const char*   filename,
+                        TextureType   type,
                         TextureFilter min_filter,
                         TextureFilter mag_filter,
                         TextureWrapMode wrap_mode )
@@ -76,7 +78,7 @@ namespace Ice
 
     // flip_image_v( image );
 
-    return load_texture( image, min_filter, mag_filter, wrap_mode );
+    return load_texture( image, type, min_filter, mag_filter, wrap_mode );
   }
 
   void bind_texture( const Texture* texture, u32 position )

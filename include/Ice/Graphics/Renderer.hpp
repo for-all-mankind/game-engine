@@ -7,7 +7,7 @@
 #include <Ice/Graphics/RenderContext.hpp>
 
 // temp
-#include <Ice/Graphics/Buffers.hpp>
+#include <Ice/Graphics/Mesh.hpp>
 #include <Ice/Graphics/Shader.hpp>
 #include <Ice/Graphics/Texture.hpp>
 #include <Ice/Transform.hpp>
@@ -32,10 +32,8 @@ namespace Ice
 
     // Temp
     Texture   _texture;
-    GLvao     _cube_vao;
+    Mesh      _cube_mesh;
     Transform _cube;
-    GLvao     _light_vao;
-    Transform _light;
   };
 }
 
