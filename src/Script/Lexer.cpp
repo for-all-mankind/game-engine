@@ -96,6 +96,7 @@ namespace Ice { namespace Script {
     else if ( buffer == "if"        ) lexer->AddToken( buffer, KW_IF        );
     else if ( buffer == "else"      ) lexer->AddToken( buffer, KW_ELSE      );
     else if ( buffer == "for"       ) lexer->AddToken( buffer, KW_FOR       );
+    else if ( buffer == "in"        ) lexer->AddToken( buffer, KW_IN        );
     else if ( buffer == "while"     ) lexer->AddToken( buffer, KW_WHILE     );
     else if ( buffer == "break"     ) lexer->AddToken( buffer, KW_BREAK     );
     else if ( buffer == "continue"  ) lexer->AddToken( buffer, KW_CONTINUE  );
@@ -505,8 +506,6 @@ namespace Ice { namespace Script {
 
     if ( c == '0' && n == 'x' )
       return &LexerMode::HexNumber;
-    else if ( c == '0' && n == 'b' )
-      return &LexerMode::BinNumber;
     else if ( c == '0' && n == 'o' )
       return &LexerMode::OctNumber;
     else
@@ -608,36 +607,6 @@ namespace Ice { namespace Script {
 
   /////////////////////////////////
 
-  LexerMode* mode_bin_number( Lexer* lexer )
-  {
-    std::string buffer;
-    char        c;
-
-    // Skip over the '0x'
-    lexer->NextChar();
-    lexer->NextChar();
-
-    while ( true )
-    {
-      c = lexer->PeekChar( 1 );
-
-      if ( c == '0' || c == '1' )
-      {
-        buffer += c;
-        lexer->NextChar();
-        continue;
-      }
-
-      break;
-    }
-
-    lexer->AddToken( buffer, LIT_HEX );
-
-    return &LexerMode::Start;
-  }
-
-  /////////////////////////////////
-
   LexerMode* mode_oct_number( Lexer* lexer )
   {
     std::string buffer;
@@ -688,7 +657,6 @@ namespace Ice { namespace Script {
   LexerMode LexerMode::Char             = { &mode_char               };
   LexerMode LexerMode::Number           = { &mode_number             };
   LexerMode LexerMode::HexNumber        = { &mode_hex_number         };
-  LexerMode LexerMode::BinNumber        = { &mode_bin_number         };
   LexerMode LexerMode::OctNumber        = { &mode_oct_number         };
 
   /////////////////////////////////

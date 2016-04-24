@@ -38,7 +38,6 @@ namespace Ice { namespace Script {
     static LexerMode Char;
     static LexerMode Number;
     static LexerMode HexNumber;
-    static LexerMode BinNumber;
     static LexerMode OctNumber;
   };
 

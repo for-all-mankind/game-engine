@@ -10,12 +10,12 @@ The libraries that this engine uses are:
 * [YSE](http://attr-x.net/yse/)
 * [Newton Dynamics](http://newtondynamics.com/forum/newton.php)
 
-## IceScript
+## Ice
 
-IceScript is a custom programming language used by IceEngine for configuration
+Ice is a custom programming language used by the IceEngine for configuration
 and modding.
 
-This guide will give a brief overview of the constructs in IceScript.
+This guide will give a brief overview of the constructs in Ice.
 
 * [Variables](#variables)
 * [Constants](#constants)
@@ -32,12 +32,12 @@ This guide will give a brief overview of the constructs in IceScript.
 * [Enums](#enums)
 * [Classes](#classes)
 * [Objects](#objects)
-* [interfaces](#interfaces)
+* [Interfaces](#interfaces)
 * [Custom Types](#custom-types)
 
 ### Variables
 
-Just like the vast majority of programming languages IceScript uses variables to
+Just like the vast majority of programming languages, Ice uses variables to
 store modifiable values. These are written as follows:
 
     a: int;
@@ -51,7 +51,7 @@ store modifiable values. These are written as follows:
 
 All variables are declared with an identifier followed by either a `:` and a
 [type](#basic-types) or a `:=`. Variables don't have to be initialised at the same time they are
-declared. IceScript is a strictly typed language, but does provide type inference
+declared. Ice is a strictly typed language, but does provide type inference
 as a convenience. See the [types](#basic-types) section for more details.
 
 Identifiers are defined by the following regular expression:
@@ -62,7 +62,7 @@ The first character can be any letter, upper or lower case, between 'a' and 'z'
 or an underscore. Then the following zero or more letters can be any combination
 of upper or lower case letters and numbers.
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Constants
 
@@ -72,13 +72,13 @@ cannot change after they are declared. They are declared with a `::`.
     d :: 20;
     d = 10; // Error: b already has a value.
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Printing
 
 TODO: start this section.
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Comments
 
@@ -94,7 +94,7 @@ TODO: start this section.
       */
     */
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Basic Types
 
@@ -102,27 +102,29 @@ There are a few basic types in the language that can be used. Once we get to
 [structs](#structs), [enums](#enums), [classes](#classes), [objects](#objects), [interfaces](#interfaces) and [custom types](#custom-types) we will see
 how a program can define it's own types.
 
+Unlike C, all types in Ice have a default value.
+
 The basic types are:
 
-| Type Name | Bytes | Range of Values                                             |
-| --------- | ----- | ----------------------------------------------------------- |
-| byte      | 1     | `-128` to `127`                                             |
-| short     | 2     | `-32,768` to `32,767`                                       |
-| int       | 4     | `–2,147,483,648` to `2,147,483,647`                         |
-| long      | 8     | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
-| ubyte     | 1     | `0` to `255`                                                |
-| ushort    | 2     | `0` to `65,535`                                             |
-| uint      | 4     | `0` to `4,294,967,295`                                      |
-| ulong     | 8     | `0` to `18,446,744,073,709,551,615`                         |
-| float     | 4     | `3.4E +/- 38`  ( 7 digits  )                                |
-| double    | 8     | `1.7E +/- 308` ( 15 digits )                                |
-| bool      | 1     | `true` or `false`                                           |
-| char      | 1     | `-128` to `127`                                             |
-| string    | N/A   | N/A                                                         |
+| Type Name | Bytes | Default Value | Range of Values                                             |
+| --------- | ----- | ------------- | ----------------------------------------------------------- |
+| byte      | 1     | `0`           | `-128` to `127`                                             |
+| short     | 2     | `0`           | `-32,768` to `32,767`                                       |
+| int       | 4     | `0`           | `–2,147,483,648` to `2,147,483,647`                         |
+| long      | 8     | `0`           | `–9,223,372,036,854,775,808` to `9,223,372,036,854,775,807` |
+| ubyte     | 1     | `0`           | `0` to `255`                                                |
+| ushort    | 2     | `0`           | `0` to `65,535`                                             |
+| uint      | 4     | `0`           | `0` to `4,294,967,295`                                      |
+| ulong     | 8     | `0`           | `0` to `18,446,744,073,709,551,615`                         |
+| float     | 4     | `0.0`         | `3.4E +/- 38`  ( 7 digits  )                                |
+| double    | 8     | `0.0`         | `1.7E +/- 308` ( 15 digits )                                |
+| bool      | 1     | `false`       | `true` or `false`                                           |
+| char      | 1     | `'\0'`        | `-128` to `127`                                             |
+| string    | N/A   | `""`          | N/A                                                         |
 
 It's not super important to learn these numbers. In fact most people don't.
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Literals
 
@@ -131,23 +133,19 @@ These are all the literals in this language.
     int         := 42;
     hexidecimal := 0xDEADBEEF;
     octal       := 0o76543210;
-    binary      := 0b10;
+    uint        := 42u;
+    float       := 3.14159f;
+    double      := 3.14159;
+    bool        := true;
+    char        := 'a';
+    string      := "Hello World";
 
-    uint := 42u;
-
-    Float := 3.14159f;
-
-    double := 3.14159;
-
-    bool := true;
-
-    char := 'a';
-
-    string := "Hello World";
-
-[Contents](#icescript)
+[Contents](#ice)
 
 ### If Statements
+
+If statements are one the control flow mechanics within Ice. They are used
+to conditionally execute code at runtime.
 
     if ( true )
       print( "This will always print" );
@@ -155,55 +153,105 @@ These are all the literals in this language.
       print( "This will never print" );
     end
 
-    if ( false )
+Types in Ice are very strict. The if statement only works on boolean values
+or expressions that evaluate to boolean values.
+
+    if ( 1 == 2 )
       print( "This will also never print" );
-    else if ( true )
+    else if ( 5 > 4 )
       print( "This will also always print" );
     else
       print( "Finally, this will never print" );
     end
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Loops
 
-    for ( index := 0; index < 10; ++index )
-      print( index );
+The second kind of control flow statement is the loop. This repeats a section of
+code until some condition evaluates to false.
+
+The `while` loop is probably the simplest of the three loops. It will execute a
+block of code while the boolean expression evaluates to `true`.
+
+This loop will print the numbers `0` to `9`:
+
+    count := 1;
+
+    while ( count < 10 )
+      print( count );
+
+      ++count;
     end
 
-    active_mods :: Array<string>{
+Something to keep in mid when using the `while` loop is that the expression is
+evaluated before the loop body starts. This means it is possibly to create
+loops that will never run.
+
+Consider the following:
+
+    while( 1 > 2 )
+      print( "I don't run!" );
+    end
+
+The second kind of loop is the `for` loop. This loop is used to iterate over the
+elements of a static array or any class that implements the `Indexable` interface.
+Don't worry about that right now though, we'll talk about [interfaces](#interfaces) later.
+
+Here we have an example of a static `array of strings` and we're going to loop
+though the `array`, taking a view of each `string` and printing the result. Again,
+don't worry about [views](#pointers), we'll cover them later.
+
+    active_mods :: []string{
       "base_0.1.0",
       "other_0.1.0"
     };
 
-    for ( mod := active_mods )
+    for ( mod^ in active_mods )
       print( mod );
     end
 
-    start := 1;
-    stop  := 101;
+Another version of the `for` loop exists. It is the most complex looking of the
+three, but it is in fact quite simple. It starts with an initialisation statement
+followed by a boolean expression and finally it has a post statement. The initialisation
+statement is run once just before the loop is run. The boolean expression is evaluated
+every time the loop starts, and the loop will stop once it evaluates to `false`. Finally
+the post statement is executed at the end of every loop iteration.
 
-    while ( true )
-      if ( start == stop )
-        break;
-      end
+The following loop implements the simple [FizzBuzz](#http://blog.codinghorror.com/why-cant-programmers-program/) program.
 
-      if ( start % 3 == 0 && start % 5 == 0 )
-        print( "FizzBuzz" );
-      else if ( start % 3 == 0 )
-        print( "Fizz" );
-      else if ( start % 5 == 0 )
-        print( "Buzz" );
+    fizz := "Fizz";
+    buzz := "Buzz";
+
+    for ( count := 1; count < 101; ++count )
+      if ( count % 15 == 0 )
+        print( fizz ~ buzz );
+      else if ( count % 3 == 0 )
+        print( fizz );
+      else if ( count % 5 == 0 )
+        print( buzz );
       else
-        print( start );
+        print( count );
       end
 
-      ++start;
+      ++count;
     end
 
-[Contents](#icescript)
+You may be wondering what the point of this `for` loop is since we could have done
+this just as easily with the `while` loop. This is true, but the `count` variable
+for the `while` loop exists outside of the scope of the loop body and will remain
+until the end of the block containing the loop. On the other hand, the initialisation
+statement of the `for` loop lives within the scope of the loop body.
+
+[Contents](#ice)
 
 ### Functions
+
+Functions provide a great way to structure code. They allow the programmer to
+encapsulate functionality into reusable code blocks that can be called from else
+where in the program.
+
+Take for example this rather trivial and pointless program:
 
     print_hello: func() -> void
       print( "Hello" );
@@ -211,13 +259,51 @@ These are all the literals in this language.
 
     print_hello();
 
-[Contents](#icescript)
+First we have a function header. It consists of the function name, in this case
+`print_hello`, and the function signature, which for this function is `func()->void`.
+There isn't much to say about the function name other than it is the identifier
+that is used to call the function later. All the interesting parts are in the
+signature, so lets break it down. The first part, `func`, defines this identifier
+as a function. It's similar to the [types](#basic-types) that are used by variables,
+except that you can't just write it on it's own. It has to be followed by the
+arguments and the return type. The arguments go inside the `(` and the `)` and the
+return type is after the `->`. This function has no arguments and returns `void`.
+The keyword `void` just means that this function returns no value.
+
+Right, now about those arguments. This is an example of how to define and use them:
+
+    add_int: func( a: int, b: int ) -> int
+      return a + b;
+    end
+
+    answer := add_int( 12, 42 );
+
+    print( answer );
+
+to be continued...
+
+[Contents](#ice)
 
 ### Structs
 
-TODO: start this section.
+Structs are one way create custom types. They consist entirely of data, in C they
+are referred to as POD or plain old data.
 
-[Contents](#icescript)
+    Item: struct
+      name : string;
+      value: float;
+    end
+
+    Player: struct
+      health   : float;
+      inventory: [ 6 ]Item;
+    end
+
+    player := Player{ health = H_MAX };
+
+to be continued...
+
+[Contents](#ice)
 
 ### Enums
 
@@ -231,40 +317,75 @@ TODO: start this section.
       SUNDAY
     end
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Anonymous Scopes
 
 TODO: start this section.
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Pointers
 
-Pointers are a bit of a complex subject, but hopefully I'll be able to explain
-their usage in a clear enough manner that you'll be able to grasp them easily.
+Before we can learn how Ice handles pointers we have to know what a pointer is.
+In it's simplest for a pointer is just a memory address. It points to an address
+ad which resides a value.
 
-Pointers in IceScript are similar to pointers in C, but there are a few
-differences that are worth noting. Pointers in C are just memory addresses, this
-is the same in IceScript, however IceScript doesn't just let you do what ever
-you want with them. IceScript follows the style of thinking that Rust employs.
+Two important concepts to know about when working with pointers are:
 
-Pointers + mutations = hard to track down bugs.
+* [The Stack](#the-stack)
+* [The Heap](#the-heap)
 
-    foo := 10;
-    foo  = 20; // Okay, because foo is a variable and there are no borrows at the moment.
+#### The Stack
+#### The Heap
 
-    bar := &foo;
-    foo  = 10; // Error, Can't modify foo while it is being viewed.
-    *bar = 10; // Error, Can't modify the value pointed to by bar.
+---
 
-Okay, so there are a few new
+Okay. Now that we have learnt how pointers can be dangerous. Lets examine how Ice
+deals with them and tries to make them safe without losing the power that they hold.
+There are three main concepts to grasp when using pointers in Ice, they are:
 
-This would be a pointer to an integer. This is what is known as a view. This says
-that you would like to have a pointer to see some data, but can't modify it.
-You can have as many of these at any one time as you like.
+* [Owners](#owners)
+* [Views](#views)
+* [Borrows](#borrows)
 
-[Contents](#icescript)
+#### Owners
+
+The way to have a variable that is an owner of memory is to declare that memory on
+the heap. This, as seen [above](#the-heap), is done with the keyword `new`.
+
+    // Allocate enough memory to store a
+    // 32 bit integer and place the value '10'
+    // at the address.
+    my_int_ptr := new int{ 10 };
+
+    // Do some code here...
+
+    delete my_int_ptr;
+
+The type of `my_int_ptr` is `owner ^int`. The following syntax could be used to
+declare an owner:
+
+    my_int_ptr: owner ^int = new int{ 10 };
+
+This works, but is unnecessary. The only time you have to specify the `owner` keyword
+is when you want to transfer ownership of the memory to a function parameter.
+
+Owners are not allowed to go out of scope without being deleted. The compiler will
+not compile your code if there is a non-deleted owner in any scope. There are only
+three valid choices for the owner variable in any scope:
+
+1. delete the owner, freeing the memory.
+2. pass the owner to a function.
+3. return the owner from a function.
+
+With these three rules it means that no memory that was allocated from the heap can
+be left non-deleted.
+
+#### Views
+#### Borrows
+
+[Contents](#ice)
 
 ### Classes
 
@@ -280,13 +401,13 @@ You can have as many of these at any one time as you like.
       end
     end
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Objects
 
 TODO: start this section.
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### interfaces
 
@@ -320,7 +441,7 @@ TODO: start this section.
       do_something_with_entity_position( &player );
     end
 
-[Contents](#icescript)
+[Contents](#ice)
 
 ### Custom Types
 
@@ -355,4 +476,4 @@ TODO: start this section.
       window.SetResizeCallback( &on_window_resize );
     end
 
-[Contents](#icescript)
+[Contents](#ice)

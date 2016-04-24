@@ -22,7 +22,7 @@ namespace Ice { namespace Script {
     LIT_NULL,              /* ^(null)                    */
 
     KW_USING,             /* using    */
-    KW_AS,                /* using    */
+    KW_AS,                /* as       */
     KW_DELEGATE,          /* delegate */
     KW_THIS,              /* this     */
     KW_END,               /* end      */
@@ -30,7 +30,7 @@ namespace Ice { namespace Script {
     KW_STATIC,            /* static   */
 
     KW_IMPORT,            /* import    */
-    KW_EXPORT,            /* export    */
+    KW_FROM,              /* from      */
     KW_FUNC,              /* func      */
     KW_STRUCT,            /* struct    */
     KW_ENUM,              /* enum      */
@@ -48,6 +48,7 @@ namespace Ice { namespace Script {
     KW_IF,                /* if       */
     KW_ELSE,              /* else     */
     KW_FOR,               /* for      */
+    KW_IN,                /* in       */
     KW_WHILE,             /* while    */
     KW_BREAK,             /* break    */
     KW_CONTINUE,          /* continue */
