@@ -43,6 +43,7 @@ namespace Ice { namespace Script {
     KW_DELETE,            /* delete */
     KW_OWNER,             /* owner  */
     KW_BORROW,            /* borrow */
+    KW_VIEW,              /* view   */
     KW_CAST,              /* cast   */
 
     KW_IF,                /* if       */

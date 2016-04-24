@@ -73,7 +73,7 @@ namespace Ice { namespace Script {
     if      ( buffer == "borrow"    ) lexer->AddToken( buffer, KW_BORROW    );
     else if ( buffer == "cast"      ) lexer->AddToken( buffer, KW_CAST      );
     else if ( buffer == "import"    ) lexer->AddToken( buffer, KW_IMPORT    );
-    else if ( buffer == "export"    ) lexer->AddToken( buffer, KW_EXPORT    );
+    else if ( buffer == "from"      ) lexer->AddToken( buffer, KW_FROM      );
     else if ( buffer == "using"     ) lexer->AddToken( buffer, KW_USING     );
     else if ( buffer == "as"        ) lexer->AddToken( buffer, KW_AS        );
     else if ( buffer == "func"      ) lexer->AddToken( buffer, KW_FUNC      );
@@ -91,6 +91,7 @@ namespace Ice { namespace Script {
     else if ( buffer == "new"       ) lexer->AddToken( buffer, KW_NEW       );
     else if ( buffer == "delete"    ) lexer->AddToken( buffer, KW_DELETE    );
     else if ( buffer == "owner"     ) lexer->AddToken( buffer, KW_OWNER     );
+    else if ( buffer == "view"      ) lexer->AddToken( buffer, KW_VIEW      );
     else if ( buffer == "scope"     ) lexer->AddToken( buffer, KW_SCOPE     );
     else if ( buffer == "end"       ) lexer->AddToken( buffer, KW_END       );
     else if ( buffer == "if"        ) lexer->AddToken( buffer, KW_IF        );

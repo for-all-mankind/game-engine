@@ -12,6 +12,7 @@ namespace Ice
   struct Vertex
   {
     Vec3   position;
+    Vec3   normal;
     Colour colour;
     Vec2   tex_coord;
   };
@@ -22,6 +23,11 @@ namespace Ice
   #define V_TYPE_P       GL_FLOAT
   #define V_NORMALISE_P  GL_FALSE
   #define V_OFFSET_P     (GLvoid*) offsetof( Vertex, position )
+
+  #define V_COMPONENTS_N 3
+  #define V_TYPE_N       GL_FLOAT
+  #define V_NORMALISE_N  GL_FALSE
+  #define V_OFFSET_N     (GLvoid*) offsetof( Vertex, normal )
 
   #define V_COMPONENTS_C 4
   #define V_TYPE_C       GL_UNSIGNED_BYTE

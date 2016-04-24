@@ -30,6 +30,11 @@ namespace Ice
     _uniform_locations.emplace( name, uniform );
   }
 
+  void Shader::UpdateUniform( const GLchar* name, u32  value )
+  {
+    glUniform1i( GetUniformLocation( name ), value );
+  }
+
   void Shader::UpdateUniform( const GLchar* name, i32 value )
   {
     glUniform1i( GetUniformLocation( name ), value );

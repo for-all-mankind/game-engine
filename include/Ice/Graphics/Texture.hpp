@@ -32,11 +32,30 @@ namespace Ice
 
   /////////////////////////////////
 
+  enum class TextureType : i32
+  {
+    Diffuse,
+    Specular,
+  };
+
+  // Find a better way to do this... Maybe macros.
+  // This one isn't too bad because it's only a small
+  // enum.
+
+  const std::string TextureTypeNames[] = {
+    "texture_diffuse",
+    "texture_specular"
+  };
+
+  /////////////////////////////////
+
   struct Texture
   {
     u32 handle;
     u32 width;
     u32 height;
+
+    TextureType type;
 
     ~Texture();
   };

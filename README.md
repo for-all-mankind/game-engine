@@ -289,12 +289,12 @@ to be continued...
 Structs are one way create custom types. They consist entirely of data, in C they
 are referred to as POD or plain old data.
 
-    Item: struct
+    struct Item
       name : string;
       value: float;
     end
 
-    Player: struct
+    struct Player
       health   : float;
       inventory: [ 6 ]Item;
     end
@@ -307,7 +307,7 @@ to be continued...
 
 ### Enums
 
-    Days: enum
+    enum Days
       MONDAY,
       TUESDAY,
       WEDNESDAY,
@@ -389,13 +389,13 @@ be left non-deleted.
 
 ### Classes
 
-    glm::vec3: class
+    class Vec3:
       X := 0.0f;
       Y := 0.0f;
       Z := 0.0f;
 
-      Cross: func( other: ^glm::vec3 ) -> glm::vec3
-        return glm::vec3{ Y * other.Z - Z * other.Y,
+      Cross: func( other: ^Vec3 ) -> Vec3
+        return Vec3{ Y * other.Z - Z * other.Y,
                      Z * other.X - X * other.Z,
                      X * other.Y - Y * other.X };
       end
@@ -411,12 +411,12 @@ TODO: start this section.
 
 ### interfaces
 
-    Entity: interface
-      GetPosition: func() -> borrow ^glm::vec3;
+    interface Entity
+      GetPosition: func() -> borrow ^Vec3;
     end
 
-    Player: class
-      position: glm::vec3;
+    class Player
+      position: Vec3;
 
       this: func( x: Float, y: Float, z: Float )
         position.X = x;
@@ -424,12 +424,12 @@ TODO: start this section.
         position.Z = z;
       end
 
-      GetPosition: func() -> borrow ^glm::vec3
+      GetPosition: func() -> borrow ^Vec3
         return &position;
       end
     end
 
-    do_something_with_entity_position: func( entity: ^Entity ) -> void
+    do_something_with_entity_position: func( entity: view ^Entity ) -> void
       position := entity.GetPosition();
 
       // ...
@@ -445,9 +445,9 @@ TODO: start this section.
 
 ### Custom Types
 
-    ResizeCallback: type ^func( ^Window, uint, uint ) -> void;
+    type ResizeCallback: func( ^Window, uint, uint ) -> void;
 
-    Window: class
+    class Window
       resize_callback: ResizeCallback?;
 
       width : uint;

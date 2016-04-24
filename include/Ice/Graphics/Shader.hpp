@@ -19,6 +19,7 @@ namespace Ice
 
     void RegisterUniform( const GLchar* name );
 
+    void UpdateUniform( const GLchar* name, u32  value );
     void UpdateUniform( const GLchar* name, i32  value );
     void UpdateUniform( const GLchar* name, f32  value );
     void UpdateUniform( const GLchar* name, i32* values, i32 count );
