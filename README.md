@@ -25,6 +25,9 @@ This guide will give a brief overview of the constructs in Ice.
 * [Literals](#literals)
 * [If Statements](#if-statements)
 * [Loops](#loops)
+* [Arrays](#arrays)
+* [Strings](#strings)
+* [Slices](#slices)
 * [Functions](#functions)
 * [Structs](#structs)
 * [Anonymous Scopes](#anonymous-scopes)
@@ -34,6 +37,7 @@ This guide will give a brief overview of the constructs in Ice.
 * [Objects](#objects)
 * [Interfaces](#interfaces)
 * [Custom Types](#custom-types)
+* [Import](#import)
 
 ### Variables
 
@@ -119,7 +123,6 @@ The basic types are:
 | float     | 4     | `0.0`         | `3.4E +/- 38`  ( 7 digits  )                                |
 | double    | 8     | `0.0`         | `1.7E +/- 308` ( 15 digits )                                |
 | bool      | 1     | `false`       | `true` or `false`                                           |
-| char      | 1     | `'\0'`        | `-128` to `127`                                             |
 | string    | N/A   | `""`          | N/A                                                         |
 
 It's not super important to learn these numbers. In fact most people don't.
@@ -242,6 +245,18 @@ this just as easily with the `while` loop. This is true, but the `count` variabl
 for the `while` loop exists outside of the scope of the loop body and will remain
 until the end of the block containing the loop. On the other hand, the initialisation
 statement of the `for` loop lives within the scope of the loop body.
+
+[Contents](#ice)
+
+### Arrays
+
+[Contents](#ice)
+
+### Slices
+
+[Contents](#ice)
+
+### Strings
 
 [Contents](#ice)
 
@@ -475,5 +490,9 @@ TODO: start this section.
       window := Window{};
       window.SetResizeCallback( &on_window_resize );
     end
+
+[Contents](#ice)
+
+### Import
 
 [Contents](#ice)

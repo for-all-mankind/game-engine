@@ -78,7 +78,6 @@ namespace Ice { namespace Script {
     else if ( buffer == "as"        ) lexer->AddToken( buffer, KW_AS        );
     else if ( buffer == "func"      ) lexer->AddToken( buffer, KW_FUNC      );
     else if ( buffer == "return"    ) lexer->AddToken( buffer, KW_RETURN    );
-    else if ( buffer == "yield"     ) lexer->AddToken( buffer, KW_YIELD     );
     else if ( buffer == "struct"    ) lexer->AddToken( buffer, KW_STRUCT    );
     else if ( buffer == "enum"      ) lexer->AddToken( buffer, KW_ENUM      );
     else if ( buffer == "class"     ) lexer->AddToken( buffer, KW_CLASS     );
@@ -146,6 +145,8 @@ namespace Ice { namespace Script {
       lexer->AddToken( "~", TOK_TILDE );
     else if ( c == '^' )
       lexer->AddToken( "^", TOK_CARET );
+    else if ( c == '#' )
+      lexer->AddToken( "#", TOK_CHANNEL );
     else if ( c == '=' )
     {
       char n = lexer->PeekChar( 1 );
@@ -199,6 +200,11 @@ namespace Ice { namespace Script {
       if ( n == '=' )
       {
         lexer->AddToken( "<=", TOK_LT_EQUAL );
+        lexer->NextChar();
+      }
+      else if ( n == '-' )
+      {
+        lexer->AddToken( "<-", TOK_CHANNEL_ARROW );
         lexer->NextChar();
       }
       else if ( n == '<' )

@@ -77,16 +77,25 @@ namespace Ice
 
   GLint Shader::GetUniformLocation( const GLchar* name )
   {
-    auto location = _uniform_locations.find( name );
+    GLint& found = _uniform_locations[ name ]; // <- hash
 
-    if ( location == _uniform_locations.end() )
-    {
-      GLint uniform = glGetUniformLocation( _program, name );
-      _uniform_locations.emplace( name, uniform );
-      return uniform;
-    }
-    else
-      return location->second;
+    if ( found != 0 )
+      return found;
+
+    found = glGetUniformLocation( _program, name );
+    return found;
+
+    // Slower, requires two hashes.
+    // auto location = _uniform_locations.find( name ); // <- hash
+
+    // if ( location == _uniform_locations.end() )
+    // {
+    //   GLint uniform = glGetUniformLocation( _program, name );
+    //   _uniform_locations.emplace( name, uniform ); // <- hash
+    //   return uniform;
+    // }
+    // else
+    //   return location->second;
   }
 
   void Shader::Bind() const

@@ -38,9 +38,10 @@ namespace Ice
     Specular,
   };
 
+  // TODO:
   // Find a better way to do this... Maybe macros.
   // This one isn't too bad because it's only a small
-  // enum.
+  // enum, but this requirement may come up again.
 
   const std::string TextureTypeNames[] = {
     "texture_diffuse",
