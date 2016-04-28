@@ -1,0 +1,15 @@
+﻿  Parser.cpp
+c:\users\matthew\documents\github\game-engine\src\script\parser.cpp(130): warning C4390: ';': empty controlled statement found; is this the intent?
+c:\users\matthew\documents\github\game-engine\src\script\parser.cpp(135): warning C4390: ';': empty controlled statement found; is this the intent?
+c:\users\matthew\documents\github\game-engine\src\script\parser.cpp(140): warning C4390: ';': empty controlled statement found; is this the intent?
+  Shader.cpp
+c:\users\matthew\documents\github\game-engine\include\ice\maths\maths.hpp(14): warning C4305: 'initializing': truncation from 'double' to 'const f32'
+c:\users\matthew\documents\github\game-engine\include\ice\maths\maths.hpp(15): warning C4305: 'initializing': truncation from 'double' to 'const f32'
+c:\users\matthew\documents\github\game-engine\src\graphics\shader.cpp(122): error C2131: expression did not evaluate to a constant
+  c:\users\matthew\documents\github\game-engine\src\graphics\shader.cpp(122): note: failure was caused by non-constant arguments or reference to a non-constant symbol
+  c:\users\matthew\documents\github\game-engine\src\graphics\shader.cpp(122): note: see usage of 'length'
+c:\users\matthew\documents\github\game-engine\src\graphics\shader.cpp(125): warning C4552: '<<': operator has no effect; expected operator with side-effect
+  Generating Code...
+  Compiling...
+  Lexer.cpp
+  Generating Code...

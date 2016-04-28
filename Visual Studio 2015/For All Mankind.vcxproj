@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\data\cfg\window_prefs.ice" />
+    <None Include="..\data\shaders\basic.frag" />
+    <None Include="..\data\shaders\basic.vert" />
+    <None Include="..\data\test\Airship4fix.dae" />
+    <None Include="..\data\test\House.dae" />
+    <None Include="..\mods\active_mods.ice" />
+    <None Include="..\mods\base_0.1.0\mod.ice" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\data\test\Airship3.png" />
+    <Image Include="..\data\test\box.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Ice\Common\Common.hpp" />
+    <ClInclude Include="..\include\Ice\Common\File.hpp" />
+    <ClInclude Include="..\include\Ice\Common\NonCopy.hpp" />
+    <ClInclude Include="..\include\Ice\Common\OpenGL.hpp" />
+    <ClInclude Include="..\include\Ice\Common\Types.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Buffers.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Colour.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Image.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Mesh.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\RenderContext.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Renderer.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Shader.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\stb_image.h" />
+    <ClInclude Include="..\include\Ice\Graphics\Texture.hpp" />
+    <ClInclude Include="..\include\Ice\Graphics\Vertex.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Angle.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Functions.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Mat4.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Maths.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Quaternion.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Tests.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Vec2.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Vec3.hpp" />
+    <ClInclude Include="..\include\Ice\Maths\Vec4.hpp" />
+    <ClInclude Include="..\include\Ice\Script\Ast.hpp" />
+    <ClInclude Include="..\include\Ice\Script\Hash.hpp" />
+    <ClInclude Include="..\include\Ice\Script\Lexer.hpp" />
+    <ClInclude Include="..\include\Ice\Script\Parser.hpp" />
+    <ClInclude Include="..\include\Ice\Script\SymbolTable.hpp" />
+    <ClInclude Include="..\include\Ice\Script\Token.hpp" />
+    <ClInclude Include="..\include\Ice\System\Engine.hpp" />
+    <ClInclude Include="..\include\Ice\System\Time.hpp" />
+    <ClInclude Include="..\include\Ice\System\Window.hpp" />
+    <ClInclude Include="..\include\Ice\Transform.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Common\File.cpp" />
+    <ClCompile Include="..\src\Graphics\GLvao.cpp" />
+    <ClCompile Include="..\src\Graphics\Image.cpp" />
+    <ClCompile Include="..\src\Graphics\Mesh.cpp" />
+    <ClCompile Include="..\src\Graphics\Renderer.cpp" />
+    <ClCompile Include="..\src\Graphics\Shader.cpp" />
+    <ClCompile Include="..\src\Graphics\stb_image.cpp" />
+    <ClCompile Include="..\src\Graphics\Texture.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Maths\Mat4.cpp" />
+    <ClCompile Include="..\src\Maths\Quaternion.cpp" />
+    <ClCompile Include="..\src\Maths\Vec2.cpp" />
+    <ClCompile Include="..\src\Maths\Vec3.cpp" />
+    <ClCompile Include="..\src\Maths\Vec4.cpp" />
+    <ClCompile Include="..\src\Script\Hash.cpp" />
+    <ClCompile Include="..\src\Script\Lexer.cpp" />
+    <ClCompile Include="..\src\Script\Parser.cpp" />
+    <ClCompile Include="..\src\Script\SymbolTable.cpp" />
+    <ClCompile Include="..\src\System\Clock.cpp" />
+    <ClCompile Include="..\src\System\Engine.cpp" />
+    <ClCompile Include="..\src\System\TickCounter.cpp" />
+    <ClCompile Include="..\src\System\Window.cpp" />
+    <ClCompile Include="..\src\Transform.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F8D64C96-8F29-4871-B384-E8E26E997919}</ProjectGuid>
+    <RootNamespace>ForAllMankind</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\Matthew\Documents\GitHub\game-engine\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\Libraries\assimp-3.1.1-win-binaries\include;D:\Libraries\glfw-3.1.2.WIN32\include;D:\Libraries\glew-1.13.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glfw3.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Libraries\assimp-3.1.1-win-binaries\lib32;D:\Libraries\glfw-3.1.2.WIN32\lib-vc2015;D:\Libraries\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\Libraries\assimp-3.1.1-win-binaries\include;D:\Libraries\glfw-3.1.2.WIN32\include;D:\Libraries\glew-1.13.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>OpenGL32.lib;glew32.lib;glfw3.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Libraries\assimp-3.1.1-win-binaries\lib32;D:\Libraries\glfw-3.1.2.WIN32\lib-vc2013;D:\Libraries\glew-1.13.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
