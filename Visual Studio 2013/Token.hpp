@@ -30,7 +30,6 @@ namespace Ice { namespace Script {
     KW_STATIC,            /* static   */
 
     KW_IMPORT,            /* import    */
-	KW_EXPORT,            /* export    */
     KW_FROM,              /* from      */
     KW_FUNC,              /* func      */
     KW_STRUCT,            /* struct    */
