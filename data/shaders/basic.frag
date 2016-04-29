@@ -23,5 +23,5 @@ void main()
 
   // out_colour = vec4( final_colour, 1.0f );
 
-  out_colour = vertex_colour;
+  out_colour = vec4( vertex_colour, 1.0f );
 }
