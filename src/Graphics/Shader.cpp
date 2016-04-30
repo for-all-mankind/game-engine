@@ -128,10 +128,10 @@ namespace Ice
       GLint length;
       glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &length );
 
-      char error[ length ];
-      glGetShaderInfoLog( shader, length, nullptr, &error[0] );
+      std::vector<char> error( length );
+      glGetShaderInfoLog( shader, length, nullptr, error.data() );
 
-      std::cerr << &error[0] << std::endl;
+      std::cerr << error.data() << std::endl;
       glDeleteShader( shader );
 
       return 0;
@@ -158,9 +158,9 @@ namespace Ice
       glGetProgramiv( _program, GL_INFO_LOG_LENGTH, &length );
 
       std::vector<char> error( length );
-      glGetShaderInfoLog( _program, length, nullptr, &error[0] );
+      glGetShaderInfoLog( _program, length, nullptr, error.data() );
 
-      std::cerr << &error[0] << std::endl;
+      std::cerr << error.data() << std::endl;
       glDeleteProgram( _program );
     }
 
