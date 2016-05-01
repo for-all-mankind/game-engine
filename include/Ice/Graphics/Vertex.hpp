@@ -11,10 +11,11 @@ namespace Ice
 {
   struct Vertex
   {
-    Vec3   position;
-    Vec3   normal;
-    Colour colour;
-    Vec2   tex_coord;
+	  Vertex();
+	  Vec3   position;
+	  Vec3   normal;
+	  Colour colour;
+	  Vec2   tex_coord;
   };
 
   #define VERTEX_SIZE sizeof( Vertex )

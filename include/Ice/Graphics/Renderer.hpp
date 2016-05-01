@@ -7,7 +7,7 @@
 #include <Ice/Graphics/RenderContext.hpp>
 
 // temp
-#include <Ice/Graphics/Mesh.hpp>
+#include <Ice/Graphics/Model.hpp>
 #include <Ice/Graphics/Shader.hpp>
 #include <Ice/Graphics/Texture.hpp>
 #include <Ice/Transform.hpp>
@@ -32,7 +32,7 @@ namespace Ice
 
     // Temp
     Texture   _texture;
-    Mesh      _cube_mesh;
+    Model	  _cube_model;
     Transform _cube;
   };
 }

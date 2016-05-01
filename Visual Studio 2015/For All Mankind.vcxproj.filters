@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{44e24534-b7c0-41d5-9cbc-a06842e06aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{a86a7ac3-4446-4f41-a8f1-5ca21f7dcad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{18279ee6-a748-4aeb-86ca-965d363519e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\CFG">
+      <UniqueIdentifier>{3ee5fedc-205d-43a4-b1eb-13f5a4f51aca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Shaders">
+      <UniqueIdentifier>{7694ad66-9ce1-40a9-a162-7e0b464b0580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Test">
+      <UniqueIdentifier>{bc3b8b86-f646-4486-baf4-51adcda2bede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Ice">
+      <UniqueIdentifier>{3dc17d4b-d28c-40ee-8b8a-05b97b2ee3eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Ice\Common">
+      <UniqueIdentifier>{8c5ebdeb-7ee6-4fc7-b661-d2fe0082d291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Ice\Graphics">
+      <UniqueIdentifier>{d2e0122e-b1fe-4a17-b1cb-498add4ac514}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Ice\Maths">
+      <UniqueIdentifier>{4372a977-edcc-4383-a922-4659ba56b92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Ice\System">
+      <UniqueIdentifier>{4eac765e-3476-4ee8-8e8c-81ecd5e3fd77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common">
+      <UniqueIdentifier>{67121710-4d82-45f6-b0d4-167c09eb7a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{a620ed57-f747-4fe2-a111-f898a4972e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Maths">
+      <UniqueIdentifier>{a24521ed-bf10-4454-9b02-dbee5f2d34ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\System">
+      <UniqueIdentifier>{ce2bf55e-2dd5-4916-b5ae-ccfc3cb0b7ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\data\shaders\basic.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\data\shaders\basic.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\data\test\Airship4fix.dae">
+      <Filter>Data\Test</Filter>
+    </None>
+    <None Include="..\data\test\House.dae">
+      <Filter>Data\Test</Filter>
+    </None>
+    <None Include="..\data\cfg\window_prefs.pnl">
+      <Filter>Data\CFG</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\data\test\Airship3.png">
+      <Filter>Data\Test</Filter>
+    </Image>
+    <Image Include="..\data\test\box.jpg">
+      <Filter>Data\Test</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Ice\Common\Common.hpp">
+      <Filter>Include\Ice\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Common\File.hpp">
+      <Filter>Include\Ice\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Common\NonCopy.hpp">
+      <Filter>Include\Ice\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Common\OpenGL.hpp">
+      <Filter>Include\Ice\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Common\Types.hpp">
+      <Filter>Include\Ice\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Buffers.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Colour.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Image.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Mesh.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\RenderContext.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Renderer.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Shader.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\stb_image.h">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Texture.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Vertex.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Angle.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Functions.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Mat4.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Maths.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Quaternion.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Tests.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Vec2.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Vec3.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Maths\Vec4.hpp">
+      <Filter>Include\Ice\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\System\Engine.hpp">
+      <Filter>Include\Ice\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\System\Time.hpp">
+      <Filter>Include\Ice\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\System\Window.hpp">
+      <Filter>Include\Ice\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Transform.hpp">
+      <Filter>Include\Ice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Common\Assimp.hpp">
+      <Filter>Include\Ice\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Ice\Graphics\Model.hpp">
+      <Filter>Include\Ice\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Common\File.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\GLvao.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\Image.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\Mesh.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\Renderer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\Shader.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\stb_image.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\Texture.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Maths\Mat4.cpp">
+      <Filter>Source\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Maths\Quaternion.cpp">
+      <Filter>Source\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Maths\Vec2.cpp">
+      <Filter>Source\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Maths\Vec3.cpp">
+      <Filter>Source\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Maths\Vec4.cpp">
+      <Filter>Source\Maths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\System\Clock.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\System\Engine.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\System\TickCounter.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\System\Window.cpp">
+      <Filter>Source\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Transform.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Graphics\Model.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
