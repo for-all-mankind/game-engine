@@ -3,3 +3,6 @@ IceEngine
 
 *.sublime-project
 *.sublime-workspace
+
+#Visual Studio files
+*Visual Studio 2015\Debug
